@@ -203,10 +203,15 @@ cygpatch() {
 	do
 		patchfile_name="${patchfile_path##*/}"
 
-		if [ ! -e ${patchfile_path} ]
+		if [ ! -f ${patchfile_path} ]
 		then
-			error "patch ${patchfile_name} not found";
-			continue;
+		   if [ -f ${DISTDIR:-.}/${patchfile_name} ]
+		   then
+			   patchfile_path=${DISTDIR:-.}/${patchfile_name}
+		   else
+			   error "patch ${patchfile_name} not found";
+			   continue;
+		   fi
 		fi
 
 		patchlevel=0;
