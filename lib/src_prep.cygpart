@@ -217,7 +217,7 @@ cygpatch() {
 		patchlevel=0;
 
 		case ${patchfile_name} in
-			${PF}.cygwin.patch)
+			*${PN}.cygwin.patch | *${PF}.cygwin.patch)
 				if [ "${S}" = "${srcdir}" ]
 				then
 					patchlevel=1;
