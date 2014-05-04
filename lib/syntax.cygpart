@@ -142,7 +142,7 @@ verbose() {
 }
 
 __stage() {
-	echo -e "\e[1;39m>>> ${1} ${PF}.${ARCH}\e[0;0m";
+	echo -e "\e[1;39m>>> ${1} ${PF}.${ARCH/i686/x86}\e[0;0m";
 }
 
 __step() {

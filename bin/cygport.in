@@ -442,7 +442,7 @@ unset restrict
 #
 ################################################################################
 
-declare -r workdir="${top}/${RPM:-$PF}.${ARCH}";
+declare -r workdir="${top}/${RPM:-$PF}.${ARCH/i686/x86}";
 declare -r srcdir="${workdir}/src";
 declare -r origsrcdir="${workdir}/origsrc";
 declare -r configdir="${workdir}/config";
