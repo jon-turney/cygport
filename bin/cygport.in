@@ -361,7 +361,7 @@ declare -r  PN=${NAME}
 declare     PV=${VERSION}
 declare -r  PR=${RELEASE}
 declare -r  PF=${PN}-${PV}-${PR}
-declare -r  cygportfile=${cygportfile##*/}
+declare -r  cygportfile=${cygportfile%.cygport}.cygport;
 declare -r  RPM="${CYGPORT_RPM_DIR:+$PN}"
 else
 # file must be named PN-PV-PR.cygport, but the extension is optional in argv[1]
@@ -442,7 +442,7 @@ unset restrict
 #
 ################################################################################
 
-declare -r workdir="${top}/${PF}.${ARCH}";
+declare -r workdir="${top}/${RPM:-$PF}.${ARCH}";
 declare -r srcdir="${workdir}/src";
 declare -r origsrcdir="${workdir}/origsrc";
 declare -r configdir="${workdir}/config";
@@ -512,8 +512,8 @@ done
 readonly _src_orig_patches;
 unset _patch_uri;
 
-declare -r cygwin_patchfile=${PF}.cygwin.patch;
-declare -r src_patchfile=${PF}.src.patch;
+declare -r cygwin_patchfile=${RPM:-PF}.cygwin.patch;
+declare -r src_patchfile=${RPM:-PF}.src.patch;
 
 declare -ar pkg_name=(${PKG_NAMES:-${PN}});
 declare -r  pkg_count=${#pkg_name[*]};
