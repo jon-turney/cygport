@@ -715,6 +715,10 @@ _EOF
 				cat >> ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
 external-source: ${PN}
 _EOF
+			else
+				cat >> ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
+build-depends: ${BUILD_REQUIRES}
+_EOF
 			fi
 			if defined ${pkg_message_var}
 			then
@@ -827,6 +831,7 @@ _EOF
 			cat > ${distdir}/${PN}/${PN}-${PVR}.hint <<-_EOF
 category: ${!pkg_category_var:-${CATEGORY}}
 requires:
+build-depends: ${BUILD_REQUIRES}
 sdesc: "${!pkg_summary_var:-${SUMMARY}}"
 ldesc: "${!pkg_description_var:-${DESCRIPTION:-${!pkg_summary_var:-${SUMMARY}}}}"
 skip:
