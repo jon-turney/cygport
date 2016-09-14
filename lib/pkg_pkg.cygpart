@@ -699,6 +699,7 @@ __pkg_dist() {
 			fi
 
 			cat > ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
+created-by: cygport-${_version}
 category: ${!pkg_category_var:-${CATEGORY}}
 requires: ${pkg_bin_requires} ${!pkg_requires_var}
 sdesc: "${!pkg_summary_var:-${SUMMARY}}"
@@ -732,6 +733,7 @@ _EOF
 			__step "${pkg_name[${n}]} OBSOLETES: ${obspkg}"
 
 			cat > ${distdir}/${PN}/${obspkg}/${obspkg}-${PVR}.hint <<-_EOF
+created-by: cygport-${_version}
 category: _obsolete
 requires: ${pkg_name[${n}]}
 sdesc: "Obsoleted by ${pkg_name[${n}]}"
@@ -759,6 +761,7 @@ _EOF
 				pkg_debug_requires=cygwin-debuginfo
 			fi
 			cat > ${distdir}/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.hint <<-_EOF
+created-by: cygport-${_version}
 category: Debug
 requires: ${pkg_debug_requires}
 external-source: ${PN}
@@ -786,6 +789,7 @@ _EOF
 			-a -n "${!pkg_summary_var:-${SUMMARY}}${!pkg_description_var:-${DESCRIPTION}}" ]
 		then
 			cat > ${distdir}/${PN}/${PN}-${PVR}.hint <<-_EOF
+created-by: cygport-${_version}
 category: ${!pkg_category_var:-${CATEGORY}}
 requires:
 build-depends: ${DEPEND}
