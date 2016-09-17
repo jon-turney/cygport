@@ -848,10 +848,15 @@ make_etc_defaults() {
 
 		dodir /etc/postinstall
 		cat >> ${D}/etc/postinstall/${PN}.sh <<-_EOF
-			if [ ! -f ${etc} ]
+			if [ ! -e ${etc} ]
 			then
 			    /usr/bin/mkdir -p ${etc%/*}
 			    /usr/bin/cp /etc/defaults${etc} ${etc}
+			else
+				if [ -f ${etc} -a -x /usr/bin/diff ]
+				then
+				    /usr/bin/diff -wut ${etc} /etc/defaults${etc}
+				fi
 			fi
 
 		_EOF
