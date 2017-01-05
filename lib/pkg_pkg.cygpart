@@ -511,6 +511,64 @@ __pkg_srcpkg() {
 	echo;
 }
 
+__pkg_versions() {
+	local -i n;
+	local -a vers;
+	local ver_tag;
+	local pkg_version_var;
+
+	if defined $1
+	then
+		pkg_version_var=$1;
+	else
+		pkg_version_var=VERSIONS;
+	fi
+
+	if [ -n "${!pkg_version_var}" ]
+	then
+		vers=(${!pkg_version_var});
+		if (( ${#vers[*]} < 2 ))
+		then
+			error "${pkg_version_var} requires at least two versions."
+		fi
+
+		n=0;
+		while defined vers[${n}]
+		do
+			ver_tag=${vers[${n}]%:*}
+			case ${ver_tag} in
+				keep-count|keep-days|keep|prev|curr|test) ;;
+				*) error "${pkg_version_var}: Invalid version tag ${ver_tag}" ;;
+			esac
+			echo "${ver_tag}: ${vers[${n}]#*:}" >> $2;
+			n+=1;
+		done
+	fi
+}
+
+#****v* Packaging/VERSIONS
+#  DESCRIPTION
+#  A single-line string containing the version that will be added to
+#  the auto-generated hint. The string consists of space-separated
+#  tag:version pairs. The allowed tags are prev, curr, and test, and
+#  at least two must be provided.
+#  SEE ALSO
+#  PKG_VERSION
+#****
+#****v* Packaging/PKG_VERSIONS
+#  DESCRIPTION
+#  A single-line string containing the version that will be added to
+#  the auto-generated hint. The string consists of space-separated
+#  tag:version pairs. The allowed tags are prev, curr, and test, and
+#  at least two must be provided.
+#
+#  Note that the PKG_VERSIONS name is descriptive rather than literal,
+#  where "PKG" should be substituted with the name of the binary package
+#  whose contents it describes.  When a package contains a character which
+#  cannot be used in a shell variable name (namely '+', '-', and '.'),
+#  that character must be substituted with an underscore ('_'), e.g.
+#  libfoo-devel will use libfoo_devel_VERSIONS.
+#****
 __pkg_dist() {
 	local -i n;
 	local -a pkg_hint;
@@ -665,6 +723,7 @@ __pkg_dist() {
 		pkg_summary_var=${pkg_name[${n}]//[-+\.]/_}_SUMMARY;
 		pkg_description_var=${pkg_name[${n}]//[-+\.]/_}_DESCRIPTION;
 		pkg_message_var=${pkg_name[${n}]//[-+\.]/_}_MESSAGE;
+		pkg_versions_var=${pkg_name[${n}]//[-+\.]/_}_VERSIONS;
 		pkg_obsoletes_var=${pkg_name[${n}]//[-+\.]/_}_OBSOLETES;
 		dbg_obsoletes_var=${PN//[-+\.]/_}_debuginfo_OBSOLETES;
 
@@ -711,6 +770,9 @@ _EOF
 external-source: ${PN}
 _EOF
 			fi
+
+			__pkg_versions ${pkg_versions_var} ${distdir}/${PN}/${distsubdir}/override.hint
+
 			if defined ${pkg_message_var}
 			then
 				cat >> ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
@@ -770,6 +832,9 @@ sdesc: "Debug info for ${PN}"
 ldesc: "This package contains files necessary for debugging the
 ${PN} package with gdb."
 _EOF
+
+			pkg_versions_var=${PN//[-+\.]/_}_debuginfo_VERSIONS;
+                        __pkg_versions ${pkg_versions_var} ${distdir}/${PN}/${PN}-debuginfo/override.hint
 		fi
 
 		for obspkg in ${!dbg_obsoletes_var}
@@ -797,6 +862,7 @@ _EOF
 		pkg_category_var=${PN//[-+\.]/_}_CATEGORY;
 		pkg_summary_var=${PN//[-+\.]/_}_SUMMARY;
 		pkg_description_var=${PN//[-+\.]/_}_DESCRIPTION;
+		pkg_versions_var=${PN//[-+\.]/_}_VERSIONS;
 
 		if [ -f ${C}/${PN}.hint ]
 		then
@@ -814,6 +880,7 @@ sdesc: "${!pkg_summary_var:-${SUMMARY}}"
 ldesc: "${!pkg_description_var:-${DESCRIPTION:-${!pkg_summary_var:-${SUMMARY}}}}"
 skip:
 _EOF
+                        __pkg_versions ${pkg_versions_var} ${distdir}/${PN}/override.hint
 		else
 			warning "${PN}.hint is missing";
 		fi
@@ -821,4 +888,4 @@ _EOF
 }
 
 # protect functions
-readonly -f __pkg_binpkg __pkg_diff __gpg_sign __pkg_srcpkg __pkg_dist
+readonly -f __pkg_binpkg __pkg_diff __gpg_sign __pkg_srcpkg __pkg_dist __pkg_versions
