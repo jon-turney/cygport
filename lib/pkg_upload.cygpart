@@ -74,7 +74,7 @@ __pkg_upload() {
 
 	# Check that binary and source package files exist
 
-	pkg_files=("arch/${NAME}/${NAME}-${PVR}-src.tar.xz" "arch/${NAME}/${NAME}-${PVR}.hint")
+	pkg_files=("src/${NAME}/${NAME}-${PVR}-src.tar.xz" "src/${NAME}/${NAME}-src-${PVR}.hint")
 
 	while (( n < pkg_count ))
 	do
@@ -154,6 +154,9 @@ __pkg_upload() {
 		rm -f /${archdir}/release/${NAME}/!ready || echo -n
 		mirror -v -eR arch/${NAME} /${archdir}/release
 		put /dev/null -o /${archdir}/release/${NAME}/!ready
+		rm -f /src/release/${NAME}/!ready || echo -n
+		mirror -v -eR src/${NAME} /src/release
+		put /dev/null -o /src/release/${NAME}/!ready
 EOF
 	) || error "Upload failed"
 

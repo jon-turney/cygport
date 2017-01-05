@@ -65,9 +65,11 @@ __pkg_binpkg() {
 #  A list of unsuffixed .hint files which should be used for each given
 #  binary package in PKG_NAMES.
 #  NOTES
-#  * If PN is not included in PKG_NAMES, a file named $PN.hint or setup.hint
+#  * If PN is not included in PKG_NAMES, a file named $PN-src.hint
 #    is still required for the source package, but should not be listed in
 #    PKG_HINTS.
+#  * If PKG_NAMES is not defined, or contains a single item (usually NAME),
+#    PKG_HINTS need not be defined, and has the default value "setup".
 #  * If the .hint filenames (minus the .hint suffix) match PKG_NAMES, PKG_HINTS
 #    need not be defined.
 #****
@@ -507,7 +509,8 @@ __pkg_srcpkg() {
 
 	cd ${spkgdir%/*};
 
-	tar Jcvf ${distdir}/arch/${PN}/${PF}-src.tar.xz ${spkgdir##*/}/ || error "Source package creation failed"
+	mkdir -p ${distdir}/src/${PN}/${PN}-src/
+	tar Jcvf ${distdir}/src/${PN}/${PN}-src/${PN}-src-${PVR}.tar.xz ${spkgdir##*/}/ || error "Source package creation failed"
 	echo;
 }
 
@@ -704,17 +707,8 @@ category: ${!pkg_category_var:-${CATEGORY}}
 requires: ${pkg_bin_requires} ${!pkg_requires_var}
 sdesc: "${!pkg_summary_var:-${SUMMARY}}"
 ldesc: "${!pkg_description_var:-${DESCRIPTION:-${!pkg_summary_var:-${SUMMARY}}}}"
+external-source: ${PN}-src
 _EOF
-			if defined distsubdir
-			then
-				cat >> ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
-external-source: ${PN}
-_EOF
-			else
-				cat >> ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
-build-depends: ${DEPEND}
-_EOF
-			fi
 			if defined ${pkg_message_var}
 			then
 				cat >> ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
@@ -769,7 +763,7 @@ _EOF
 			cat > ${distdir}/arch/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.hint <<-_EOF
 category: Debug
 requires: ${pkg_debug_requires}
-external-source: ${PN}
+external-source: ${PN}-src
 sdesc: "Debug info for ${PN}"
 ldesc: "This package contains files necessary for debugging the
 ${PN} package with gdb."
@@ -790,39 +784,33 @@ sdesc: "Obsoleted by ${PN}-debuginfo"
 ldesc: "The ${obspkg} package is obsolete.  Selecting this package for
 installation will cause the ${PN}-debuginfo package, which replaces this
 one, to be installed instead."
-external-source: ${PN}
+external-source: ${PN}-src
 _EOF
 		done
 	fi
 
-	# e.g. split library package w/o PN in PKG_NAMES
-	if [ ! -f ${distdir}/arch/${PN}/${PN}-${PVR}.hint ]
-	then
+	# there will always be a source package
 		pkg_category_var=${PN//[-+\.]/_}_CATEGORY;
 		pkg_summary_var=${PN//[-+\.]/_}_SUMMARY;
 		pkg_description_var=${PN//[-+\.]/_}_DESCRIPTION;
 
-		if [ -f ${C}/${PN}.hint ]
+		if [ -f ${C}/${PN}-src.hint ]
 		then
-			cp ${C}/${PN}.hint ${distdir}/arch/${PN}/${PN}-${PVR}.hint
-		elif [ -f ${C}/setup.hint ]
-		then
-			cp ${C}/setup.hint ${distdir}/arch/${PN}/${PN}-${PVR}.hint
+			cp ${C}/${PN}-src.hint ${distdir}/src/${PN}/${PN}-src/${PN}-src-${PVR}.hint
 		elif [ -n "${!pkg_category_var:-${CATEGORY}}" \
 			-a -n "${!pkg_summary_var:-${SUMMARY}}${!pkg_description_var:-${DESCRIPTION}}" ]
 		then
-			cat > ${distdir}/arch/${PN}/${PN}-${PVR}.hint <<-_EOF
+			cat > ${distdir}/src/${PN}/${PN}-src/${PN}-src-${PVR}.hint <<-_EOF
 category: ${!pkg_category_var:-${CATEGORY}}
 requires:
 build-depends: ${DEPEND}
-sdesc: "${!pkg_summary_var:-${SUMMARY}}"
+sdesc: "${!pkg_summary_var:-${SUMMARY}} (source)"
 ldesc: "${!pkg_description_var:-${DESCRIPTION:-${!pkg_summary_var:-${SUMMARY}}}}"
 skip:
 _EOF
 		else
-			warning "${PN}.hint is missing";
+			warning "${PN}-src.hint is missing";
 		fi
-	fi
 }
 
 # protect functions
