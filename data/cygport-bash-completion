@@ -9,7 +9,7 @@ _cygport()
 
 	commands='download fetch wget get \
 		prep unpack oldpatch compile build make \
-		check test inst install list dep depends \
+		check test inst install list dep depends srcpackage srcpkg \
 		info package pkg diff mkdiff mkpatch clean finish \
 		upload up announce almostall all help version homepage website'
 

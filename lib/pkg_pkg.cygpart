@@ -512,6 +512,28 @@ __pkg_srcpkg() {
 	mkdir -p ${distdir}/src/${PN}/${PN}-src/
 	tar Jcvf ${distdir}/src/${PN}/${PN}-src/${PN}-src-${PVR}.tar.xz ${spkgdir##*/}/ || error "Source package creation failed"
 	echo;
+
+	pkg_category_var=${PN//[-+\.]/_}_CATEGORY;
+	pkg_summary_var=${PN//[-+\.]/_}_SUMMARY;
+	pkg_description_var=${PN//[-+\.]/_}_DESCRIPTION;
+
+	if [ -f ${C}/${PN}-src.hint ]
+	then
+		cp ${C}/${PN}-src.hint ${distdir}/src/${PN}/${PN}-src/${PN}-src-${PVR}.hint
+	elif [ -n "${!pkg_category_var:-${CATEGORY}}" \
+		-a -n "${!pkg_summary_var:-${SUMMARY}}${!pkg_description_var:-${DESCRIPTION}}" ]
+	then
+		cat > ${distdir}/src/${PN}/${PN}-src/${PN}-src-${PVR}.hint <<-_EOF
+category: ${!pkg_category_var:-${CATEGORY}}
+requires:
+build-depends: ${DEPEND}
+sdesc: "${!pkg_summary_var:-${SUMMARY}} (source)"
+ldesc: "${!pkg_description_var:-${DESCRIPTION:-${!pkg_summary_var:-${SUMMARY}}}}"
+skip:
+_EOF
+	else
+		warning "${PN}-src.hint is missing";
+	fi
 }
 
 __pkg_dist() {
@@ -788,29 +810,6 @@ external-source: ${PN}-src
 _EOF
 		done
 	fi
-
-	# there will always be a source package
-		pkg_category_var=${PN//[-+\.]/_}_CATEGORY;
-		pkg_summary_var=${PN//[-+\.]/_}_SUMMARY;
-		pkg_description_var=${PN//[-+\.]/_}_DESCRIPTION;
-
-		if [ -f ${C}/${PN}-src.hint ]
-		then
-			cp ${C}/${PN}-src.hint ${distdir}/src/${PN}/${PN}-src/${PN}-src-${PVR}.hint
-		elif [ -n "${!pkg_category_var:-${CATEGORY}}" \
-			-a -n "${!pkg_summary_var:-${SUMMARY}}${!pkg_description_var:-${DESCRIPTION}}" ]
-		then
-			cat > ${distdir}/src/${PN}/${PN}-src/${PN}-src-${PVR}.hint <<-_EOF
-category: ${!pkg_category_var:-${CATEGORY}}
-requires:
-build-depends: ${DEPEND}
-sdesc: "${!pkg_summary_var:-${SUMMARY}} (source)"
-ldesc: "${!pkg_description_var:-${DESCRIPTION:-${!pkg_summary_var:-${SUMMARY}}}}"
-skip:
-_EOF
-		else
-			warning "${PN}-src.hint is missing";
-		fi
 }
 
 # protect functions
