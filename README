@@ -146,8 +146,8 @@ to be processed.  All other arguments are interpreted as a COMMAND, which may be
     package   - create binary and source packages
     upload    - upload finished packages to cygwin.com
     finish    - delete the working directory
-    all       - run all of the above, including finish
-    almostall - run all of the above, except for finish
+    all       - run prep, compile, install, package and finish
+    almostall - as all, excluding finish
 
 Other COMMANDs are meant primarily for maintainers:
 
