@@ -74,7 +74,7 @@ __pkg_upload() {
 
 	# Check that binary and source package files exist
 
-	pkg_files=("${NAME}/${NAME}-${PVR}-src.tar.xz" "${NAME}/${NAME}-${PVR}.hint")
+	pkg_files=("arch/${NAME}/${NAME}-${PVR}-src.tar.xz" "arch/${NAME}/${NAME}-${PVR}.hint")
 
 	while (( n < pkg_count ))
 	do
@@ -83,13 +83,13 @@ __pkg_upload() {
 		*)      distsubdir=${pkg_name[${n}]} ;;
 		esac
 
-		pkg_files+=("${NAME}/${distsubdir}/${pkg_name[${n}]}-${PVR}.tar.xz" "${NAME}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint")
+		pkg_files+=("arch/${NAME}/${distsubdir}/${pkg_name[${n}]}-${PVR}.tar.xz" "arch/${NAME}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint")
 		n+=1
 	done
 
 	if [ -d ${NAME}/${NAME}-debuginfo ]
 	then
-		pkg_files+=("${NAME}/${NAME}-debuginfo/${NAME}-debuginfo-${PVR}.tar.xz" "${NAME}/${NAME}-debuginfo/${NAME}-debuginfo-${PVR}.hint")
+		pkg_files+=("arch/${NAME}/${NAME}-debuginfo/${NAME}-debuginfo-${PVR}.tar.xz" "arch/${NAME}/${NAME}-debuginfo/${NAME}-debuginfo-${PVR}.hint")
 	fi
 
 	for file in "${pkg_files[@]}"
@@ -151,10 +151,9 @@ __pkg_upload() {
 		set cmd:interactive on
 		set net:max-retries 1
 		open ${connect_string}
-		cd /${archdir}/release
-		rm -f ${NAME}/!ready || echo -n
-		mirror -v -eR ${NAME}
-		put /dev/null -o ${NAME}/!ready
+		rm -f /${archdir}/release/${NAME}/!ready || echo -n
+		mirror -v -eR arch/${NAME} /${archdir}/release
+		put /dev/null -o /${archdir}/release/${NAME}/!ready
 EOF
 	) || error "Upload failed"
 

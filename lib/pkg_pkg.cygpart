@@ -165,8 +165,8 @@ __pkg_binpkg() {
 
 		if defined pkg_contents
 		then
-			mkdir -p ${distdir}/${PN}/${distsubdir};
-			tar Jcvf ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.tar.xz \
+			mkdir -p ${distdir}/arch/${PN}/${distsubdir};
+			tar Jcvf ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.tar.xz \
 				--exclude=usr/lib/debug --exclude=usr/src \
 				--exclude=${autoloaddir} \
 				${pkg_contents} \
@@ -174,8 +174,8 @@ __pkg_binpkg() {
 				|| error "Binary package creation failed: ${pkg_name[${n}]}"
 		else
 			inform "Creating empty package"
-			mkdir -p ${distdir}/${PN}/${distsubdir};
-			tar -Jcf ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.tar.xz --files-from /dev/null \
+			mkdir -p ${distdir}/arch/${PN}/${distsubdir};
+			tar -Jcf ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.tar.xz --files-from /dev/null \
 				|| error "Empty package creation failed"
 			> ${T}/.${pkg_name[${n}]}.lst
 		fi
@@ -189,8 +189,8 @@ __pkg_binpkg() {
 		local dbg_contents_var=${PN//[-+\.]/_}_debuginfo_CONTENTS;
 
 		__step "${PN}-debuginfo-${PVR}.tar.xz";
-		mkdir -p ${distdir}/${PN}/${PN}-debuginfo;
-		tar Jcvf ${distdir}/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.tar.xz \
+		mkdir -p ${distdir}/arch/${PN}/${PN}-debuginfo;
+		tar Jcvf ${distdir}/arch/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.tar.xz \
 			usr/*/debug/ ${autoloaddir} ${!dbg_contents_var} \
 			| tee ${T}/.${PN}-debuginfo.lst \
 			|| error "Debuginfo package creation failed: ${PN}-debuginfo"
@@ -219,7 +219,7 @@ __pkg_pkgcheck() {
 		n+=1
 	done
 
-	if ! defined _CYGPORT_RESTRICT_debuginfo_ && [ -f ${distdir}/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.tar.xz ]
+	if ! defined _CYGPORT_RESTRICT_debuginfo_ && [ -f ${distdir}/arch/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.tar.xz ]
 	then
 		grep -Ev "/$" ${T}/.${PN}-debuginfo.lst >> ${tmp1}
 	fi
@@ -507,7 +507,7 @@ __pkg_srcpkg() {
 
 	cd ${spkgdir%/*};
 
-	tar Jcvf ${distdir}/${PN}/${PF}-src.tar.xz ${spkgdir##*/}/ || error "Source package creation failed"
+	tar Jcvf ${distdir}/arch/${PN}/${PF}-src.tar.xz ${spkgdir##*/}/ || error "Source package creation failed"
 	echo;
 }
 
@@ -685,7 +685,7 @@ __pkg_dist() {
 
 		if [ -f ${C}/${pkg_hint[${n}]%.hint}.hint ]
 		then
-			cp ${C}/${pkg_hint[${n}]%.hint}.hint ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint;
+			cp ${C}/${pkg_hint[${n}]%.hint}.hint ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint;
 		elif [ -n "${!pkg_category_var:-${CATEGORY}}" -a -n "${!pkg_summary_var:-${SUMMARY}}" ]
 		then
 			if [ "${CBUILD##*-}" = "cygwin" ]
@@ -699,7 +699,7 @@ __pkg_dist() {
 				inform "ADD ${distsubdir:-${PN}} DLL DEPENDENCIES TO ${PN}${distsubdir:+/}${distsubdir}/${pkg_name[${n}]}-${PVR}.hint"
 			fi
 
-			cat > ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
+			cat > ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
 category: ${!pkg_category_var:-${CATEGORY}}
 requires: ${pkg_bin_requires} ${!pkg_requires_var}
 sdesc: "${!pkg_summary_var:-${SUMMARY}}"
@@ -707,17 +707,17 @@ ldesc: "${!pkg_description_var:-${DESCRIPTION:-${!pkg_summary_var:-${SUMMARY}}}}
 _EOF
 			if defined distsubdir
 			then
-				cat >> ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
+				cat >> ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
 external-source: ${PN}
 _EOF
 			else
-				cat >> ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
+				cat >> ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
 build-depends: ${DEPEND}
 _EOF
 			fi
 			if defined ${pkg_message_var}
 			then
-				cat >> ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
+				cat >> ${distdir}/arch/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.hint <<-_EOF
 message: ${pkg_name[${n}]} "${!pkg_message_var}"
 _EOF
 			fi
@@ -734,12 +734,12 @@ _EOF
 				obssubdir=${obspkg};
 			fi
 
-			mkdir -p ${distdir}/${PN}/${obssubdir};
-			tar -Jcf ${distdir}/${PN}/${obssubdir}/${obspkg}-${PVR}.tar.xz --files-from /dev/null
+			mkdir -p ${distdir}/arch/${PN}/${obssubdir};
+			tar -Jcf ${distdir}/arch/${PN}/${obssubdir}/${obspkg}-${PVR}.tar.xz --files-from /dev/null
 
 			__step "${pkg_name[${n}]} OBSOLETES: ${obspkg}"
 
-			cat > ${distdir}/${PN}/${obssubdir}/${obspkg}-${PVR}.hint <<-_EOF
+			cat > ${distdir}/arch/${PN}/${obssubdir}/${obspkg}-${PVR}.hint <<-_EOF
 category: _obsolete
 requires: ${pkg_name[${n}]}
 sdesc: "Obsoleted by ${pkg_name[${n}]}"
@@ -753,20 +753,20 @@ _EOF
 		n+=1;
 	done
 
-	if ! defined _CYGPORT_RESTRICT_debuginfo_ && [ -f ${distdir}/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.tar.xz ]
+	if ! defined _CYGPORT_RESTRICT_debuginfo_ && [ -f ${distdir}/arch/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.tar.xz ]
 	then
 		if [ -f ${C}/${PN}-debuginfo.hint ]
 		then
-			cp ${C}/${PN}-debuginfo.hint ${distdir}/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.hint
+			cp ${C}/${PN}-debuginfo.hint ${distdir}/arch/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.hint
 		elif [ -f ${C}/debuginfo.hint ]
 		then
-			cp ${C}/debuginfo.hint ${distdir}/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.hint
+			cp ${C}/debuginfo.hint ${distdir}/arch/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.hint
 		else
 			if [ "${PN}" != "cygwin-debuginfo" ]
 			then
 				pkg_debug_requires=cygwin-debuginfo
 			fi
-			cat > ${distdir}/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.hint <<-_EOF
+			cat > ${distdir}/arch/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.hint <<-_EOF
 category: Debug
 requires: ${pkg_debug_requires}
 external-source: ${PN}
@@ -778,12 +778,12 @@ _EOF
 
 		for obspkg in ${!dbg_obsoletes_var}
 		do
-			mkdir -p ${distdir}/${PN}/${obspkg};
-			xz < /dev/null > ${distdir}/${PN}/${obspkg}/${obspkg}-${PVR}.tar.xz
+			mkdir -p ${distdir}/arch/${PN}/${obspkg};
+			xz < /dev/null > ${distdir}/arch/${PN}/${obspkg}/${obspkg}-${PVR}.tar.xz
 
 			__step "${PN}-debuginfo OBSOLETES: ${obspkg}"
 
-			cat > ${distdir}/${PN}/${obspkg}/${obspkg}-${PVR}.hint <<-_EOF
+			cat > ${distdir}/arch/${PN}/${obspkg}/${obspkg}-${PVR}.hint <<-_EOF
 category: _obsolete
 requires: ${PN}-debuginfo
 sdesc: "Obsoleted by ${PN}-debuginfo"
@@ -796,7 +796,7 @@ _EOF
 	fi
 
 	# e.g. split library package w/o PN in PKG_NAMES
-	if [ ! -f ${distdir}/${PN}/${PN}-${PVR}.hint ]
+	if [ ! -f ${distdir}/arch/${PN}/${PN}-${PVR}.hint ]
 	then
 		pkg_category_var=${PN//[-+\.]/_}_CATEGORY;
 		pkg_summary_var=${PN//[-+\.]/_}_SUMMARY;
@@ -804,14 +804,14 @@ _EOF
 
 		if [ -f ${C}/${PN}.hint ]
 		then
-			cp ${C}/${PN}.hint ${distdir}/${PN}/${PN}-${PVR}.hint
+			cp ${C}/${PN}.hint ${distdir}/arch/${PN}/${PN}-${PVR}.hint
 		elif [ -f ${C}/setup.hint ]
 		then
-			cp ${C}/setup.hint ${distdir}/${PN}/${PN}-${PVR}.hint
+			cp ${C}/setup.hint ${distdir}/arch/${PN}/${PN}-${PVR}.hint
 		elif [ -n "${!pkg_category_var:-${CATEGORY}}" \
 			-a -n "${!pkg_summary_var:-${SUMMARY}}${!pkg_description_var:-${DESCRIPTION}}" ]
 		then
-			cat > ${distdir}/${PN}/${PN}-${PVR}.hint <<-_EOF
+			cat > ${distdir}/arch/${PN}/${PN}-${PVR}.hint <<-_EOF
 category: ${!pkg_category_var:-${CATEGORY}}
 requires:
 build-depends: ${DEPEND}
