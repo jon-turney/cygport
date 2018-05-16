@@ -245,6 +245,15 @@ else
 	readonly _tar_bz2_flag="-j"
 fi
 
+# check for case sensitivity
+_casesensitive=$(od /proc/registry/HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Control/Session\ Manager/kernel/obcaseinsensitive 2>/dev/null | head -1 | cut -d' ' -f2)
+if (( ${_casesensitive} ))
+then
+	warning "Case-sensitivity is off. Cygport scripts may assume it is on."
+	warning "See https://cygwin.com/cygwin-ug-net/using-specialnames.html#pathnames-casesensitive"
+fi
+
+unset __casesensitive
 
 ################################################################################
 #
