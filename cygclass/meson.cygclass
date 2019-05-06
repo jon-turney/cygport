@@ -21,6 +21,8 @@
 #
 ################################################################################
 
+declare -gr _CYGPORT_RELATIVE_PREFIX_MAPS=1
+
 #****h* Cygclasses/meson.cygclass
 #  SYNOPSIS
 #  inherit meson
@@ -86,7 +88,7 @@ cygmeson() {
 		--localstatedir=$(__host_localstatedir) \
 		--sysconfdir=$(__host_sysconfdir) \
 		--buildtype=plain --wrap-mode=nodownload \
-		${crossargs} ${CYGMESON_ARGS} "${@}" ${CHOST} \
+		${crossargs} ${CYGMESON_ARGS} "${@}" ${B} . \
 		|| error "meson failed"
 }
 
@@ -101,7 +103,7 @@ cygmeson() {
 #****
 meson_compile() {
 	cygmeson ${@}
-	cygninja -C ${CHOST}
+	cygninja -C ${B}
 }
 
 #****T* meson.cygclass/meson_test
@@ -113,7 +115,7 @@ meson_compile() {
 #  meson_test should be run in the directory containing the top-level meson.build.
 #****
 meson_test() {
-	ninja_test -C ${CHOST}
+	ninja_test -C ${B}
 }
 
 #****I* meson.cygclass/meson_install
@@ -125,7 +127,7 @@ meson_test() {
 #  meson_install should be run in the directory containing the top-level meson.build.
 #****
 meson_install() {
-	ninja_install -C ${CHOST}
+	ninja_install -C ${B}
 }
 
 #****o* meson.cygclass/src_compile (meson)
