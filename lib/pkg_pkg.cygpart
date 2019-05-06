@@ -20,6 +20,8 @@
 #
 ################################################################################
 
+anon="--owner=Guest:501 --group=None:513"
+
 #****** Chapter 12/Packaging
 #  INTRODUCTION
 #  In most cases, only one binary package is created from a source package,
@@ -171,6 +173,7 @@ __pkg_binpkg() {
 		then
 			mkdir -p ${distdir}/${PN}/${distsubdir};
 			tar Jcvf ${distdir}/${PN}/${distsubdir}/${pkg_name[${n}]}-${PVR}.tar.xz \
+				${anon} \
 				--exclude=usr/lib/debug --exclude=usr/src \
 				--exclude=${autoloaddir} \
 				${pkg_contents} \
@@ -195,6 +198,7 @@ __pkg_binpkg() {
 		__step "${PN}-debuginfo-${PVR}.tar.xz";
 		mkdir -p ${distdir}/${PN}/${PN}-debuginfo;
 		tar Jcvf ${distdir}/${PN}/${PN}-debuginfo/${PN}-debuginfo-${PVR}.tar.xz \
+			${anon} \
 			usr/*/debug/ ${autoloaddir} ${!dbg_contents_var} \
 			| tee ${T}/.${PN}-debuginfo.lst \
 			|| error "Debuginfo package creation failed: ${PN}-debuginfo"
@@ -505,7 +509,7 @@ __pkg_srcpkg() {
 
 	cd ${spkgdir%/*};
 
-	tar Jcvf ${distdir}/${PN}/${PF}-src.tar.xz ${spkgdir##*/}/ || error "Source package creation failed"
+	tar Jcvf ${distdir}/${PN}/${PF}-src.tar.xz ${anon} ${spkgdir##*/}/ || error "Source package creation failed"
 	echo;
 }
 
