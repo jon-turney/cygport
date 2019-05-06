@@ -568,10 +568,17 @@ then
 		do
 			declare ${flags}+=" -fdebug-prefix-map=${map}=/usr/src/debug/${PF}"
 		done
-		declare ${flags}+=" -fdebug-prefix-map=${B}=/usr/src/debug/${PF}"
-		declare ${flags}+=" -fdebug-prefix-map=${S}=/usr/src/debug/${PF}"
+		if ! defined _CYGPORT_RELATIVE_PREFIX_MAPS
+		then
+			declare ${flags}+=" -fdebug-prefix-map=${B}=/usr/src/debug/${PF}"
+			declare ${flags}+=" -fdebug-prefix-map=${S}=/usr/src/debug/${PF}"
+		else
+			declare ${flags}+=" -fdebug-prefix-map==/usr/src/debug/${PF}"
+			relpath=$(realpath -m --relative-to ${B} ${S})
+			declare ${flags}+=" -fdebug-prefix-map=${relpath}=/usr/src/debug/${PF}"
+		fi
 	done
-	unset flags map
+	unset flags map relpath
 fi
 
 ################################################################################
