@@ -16,4 +16,4 @@ cp -f ${top_srcdir}/testsuite/$test/* .
 
 DISTDIR=${DISTDIR} ${top_builddir}/bin/cygport-inplace *.cygport clean get all
 
-cmp ${top_srcdir}/testsuite/$test/*.list <(${top_builddir}/bin/cygport-inplace *.cygport list)
+diff -u ${CASE_INSENSITIVE:+-i} ${top_srcdir}/testsuite/$test/*.list <(${top_builddir}/bin/cygport-inplace *.cygport list)
