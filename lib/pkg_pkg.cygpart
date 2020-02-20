@@ -907,6 +907,12 @@ _EOF
 homepage: ${HOMEPAGE}
 _EOF
 			fi
+			if [ -n "${BUILD_REQUIRES}" ]
+			then
+				cat >> ${distdir}/${PN}/${PN}-${PVR}-src.hint <<-_EOF
+build-depends: ${BUILD_REQUIRES}
+_EOF
+			fi
 		else
 			warning "${PN}-src.hint is missing";
 		fi
