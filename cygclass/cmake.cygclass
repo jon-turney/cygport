@@ -82,6 +82,19 @@ __cmake_system() {
 	echo -n ${cmsys}
 }
 
+__cmake_proc() {
+	local cmproc
+
+	case ${CHOST} in
+	x86_64-*)         cmproc="x86_64" ;;
+	i686-*)           cmproc="i686" ;;
+	aarch64-*)        cmproc="aarch64" ;;
+	*)	error "Host ${CHOST} is not supported by CMake" ;;
+	esac
+
+	echo -n ${cmproc}
+}
+
 #****C* cmake.cygclass/cygcmake
 #  SYNOPSIS
 #  cygcmake [OPTIONS]
@@ -142,6 +155,7 @@ cygcmake() {
 	if cross_compiling
 	then
 		crossargs="-DCMAKE_SYSTEM_NAME=$(__cmake_system)
+			-DCMAKE_SYSTEM_PROCESSOR=$(__cmake_proc)
 			-D_CMAKE_TOOLCHAIN_PREFIX=${CHOST}-
 			-DCMAKE_FIND_ROOT_PATH=$(${CC} -print-sysroot)
 			-DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY
@@ -236,4 +250,4 @@ src_install() {
 }
 #****
 
-readonly -f __cmake_system cygcmake
+readonly -f __cmake_system __cmake_proc cygcmake
