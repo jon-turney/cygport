@@ -1,13 +1,26 @@
 #!perl -w
+#
+# Run 'objdump -Wl' to dump out the raw DWARF .debug_line section.
+#
+# Parse this human readable output to extract ...
+#
+# Only output pathnames which match a filter string (the source directory, after
+# file-prefix-map is taken into account), to omit unrelated source files (e.g
+# system headers and external libraries)
+#
+
 use common::sense;
 use List::Util qw( sum );
+
+my $debug = 0;
 
 my $filter = shift @ARGV
     or die "not enough arguments";
 my $obj = shift @ARGV
     or die "not enough arguments";
-my @objdump = qw( /usr/bin/objdump -WNl );
-open my $DWARF, "-|", @objdump, $obj
+
+my $objdump = $ENV{OBJDUMP} || "/usr/bin/objdump";
+open my $DWARF, "-|", $objdump, "-WNl", $obj
     or die "can't invoke objdump\n$!";
 
 my ( @dirs, @files, %fn, %rn );
@@ -43,7 +56,7 @@ foreach my $fn (grep m:^$filter:, sort keys %fn) {
 say STDERR sprintf "\tLNS: %6d (%6d locations) <=> FNT: %6d ( %6d locations)",
     0+grep( m:^$filter:, keys %fn ), sum( values %fn ),
     0+grep( m:^$filter:, keys %rn ), sum( values %rn )
-    if (0);
+    if ($debug);
 
 close $DWARF
     or die "failed to close objdump\n$!";
