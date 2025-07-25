@@ -220,7 +220,7 @@ src_compile() {
 #  DEFINITION
 src_test() {
 	cd ${B}
-	ctest
+	ctest --output-on-failure
 }
 #****
 
