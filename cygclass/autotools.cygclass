@@ -191,12 +191,25 @@ __parse_aclocal_amflags() {
 #****
 
 gnuconfigize() {
+	local d f ts_old ts_new
+
 	(( $# >= 1 )) || error "gnuconfigize: no destinations specified"
 
 	for d in $@
 	do
-		[ -f $d/config.guess ] || error "gnuconfigize: $d: not a gnuconfig directory"
-		cp -f ${_privgnuconfigdir}/config.{guess,sub} $d/
+		for f in config.{guess,sub}
+		do
+			[ -f ${d}/${f} ] || error "gnuconfigize: $d: not a gnuconfig directory"
+			ts_old=$(sed -n "s/^timestamp='\([-0-9]*\)'.*$/\1/p" ${d}/${f})
+			ts_new=$(sed -n "s/^timestamp='\([-0-9]*\)'.*$/\1/p" ${_privgnuconfigdir}/${f})
+			if ! [ "${ts_old}" '<' "${ts_new}" ]
+			then
+				inform "${f}: not downgrading from '${ts_old}' to '${ts_new}'"
+				continue
+			fi
+			cp -f ${_privgnuconfigdir}/${f} ${d}/
+			inform "${f}: updated from '${ts_old}' to '${ts_new}'"
+		done
 	done
 }
 
