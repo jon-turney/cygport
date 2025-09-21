@@ -1,3 +1,7 @@
+0.37.3:
+	* cmake: Make the default output froms src_test more useful
+	* Update gnuconfig submodule
+	* autotools: gnuconfigize: prevent downgrade of config.{guess,sub}
 0.37.2:
 	* python.org: Also set SRC_DIR appropriately
 0.37.1:
