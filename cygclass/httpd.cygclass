@@ -186,7 +186,12 @@ DEPS_PATH="${DEPS_PATH}${DEPS_PATH+:}/usr/sbin:${HTTPD_LIBEXECDIR}"
 #****
 case ${HTTPD_VERSION:0:3} in
 2.4)	APR_VERSION=1 ;;
-*)	error "Don't know anything about Apache HTTP Server ${HTTPD_VERSION}" ;;
+*)
+	if [ ! ${__cygport_check_prog_req_nonfatal} ]
+	then
+		error "Don't know anything about Apache HTTP Server ${HTTPD_VERSION}"
+	fi
+	;;
 esac
 
 #****d* httpd.cygclass/APR_CONFIG
@@ -203,7 +208,12 @@ case ${APR_VERSION} in
 1)	APR_CONFIG=/usr/bin/apr-${APR_VERSION}-config
 	APU_CONFIG=/usr/bin/apu-${APR_VERSION}-config
 	;;
-*)	error "Illegal value ${APR_VERSION} for APR_VERSION" ;;
+*)
+	if [ ! ${__cygport_check_prog_req_nonfatal} ]
+	then
+		error "Illegal value ${APR_VERSION} for APR_VERSION"
+	fi
+	;;
 esac
 
 check_prog_req ${APR_CONFIG##*/} libapr${APR_VERSION}-devel
