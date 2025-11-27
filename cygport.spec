@@ -18,10 +18,6 @@ BuildRequires:  robodoc
 
 Requires:       autoconf automake libtool pkgconfig
 Requires:       bzip2 gzip unzip
-Requires:       cygwin32-binutils
-Requires:       cygwin32-gcc
-Requires:       cygwin32-libtool
-Requires:       cygwin32-pkg-config
 Requires:       cygwin64-binutils
 Requires:       cygwin64-gcc
 Requires:       cygwin64-libtool
@@ -47,6 +43,10 @@ Requires:       wget
 Requires:       which
 Requires:       xz
 
+Suggests:       cygwin32-binutils
+Suggests:       cygwin32-gcc
+Suggests:       cygwin32-libtool
+Suggests:       cygwin32-pkg-config
 
 %description
 Cygwin package building tool.
