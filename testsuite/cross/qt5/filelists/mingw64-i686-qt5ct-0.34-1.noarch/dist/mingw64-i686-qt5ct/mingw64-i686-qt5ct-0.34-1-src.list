@@ -1,0 +1,5 @@
+mingw64-i686-qt5ct-0.34-1.src/
+mingw64-i686-qt5ct-0.34-1.src/0.24-mingw-install.patch
+mingw64-i686-qt5ct-0.34-1.src/0.34-os-win.patch
+mingw64-i686-qt5ct-0.34-1.src/mingw64-i686-qt5ct.cygport
+mingw64-i686-qt5ct-0.34-1.src/qt5ct-0.34.tar.bz2

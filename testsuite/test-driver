@@ -18,7 +18,7 @@ esac
 test -d ${top_builddir}/testsuite/$test || mkdir -p ${top_builddir}/testsuite/$test
 cd ${top_builddir}/testsuite/$test
 
-cp -f ${top_srcdir}/testsuite/$test/!(hints) .
+cp -f ${top_srcdir}/testsuite/$test/!(hints|filelists) .
 
 DISTDIR=${DISTDIR} RESTRICT=${RESTRICT} ${top_builddir}/bin/cygport-inplace *.cygport clean get all
 
@@ -46,5 +46,38 @@ then
     exit 1
 fi
 
-# compare filelist
-diff -u ${CASE_INSENSITIVE:+-i} ${top_srcdir}/testsuite/$test/*.list <(${top_builddir}/bin/cygport-inplace *.cygport list)
+# compare overall filelist
+if [ -z ${CREATE_FILELISTS+x} ]
+then
+        diff -u ${CASE_INSENSITIVE:+-i} ${top_srcdir}/testsuite/$test/*.list <(${top_builddir}/bin/cygport-inplace *.cygport list)
+else
+        cygport=$(echo *.cygport)
+        ${top_builddir}/bin/cygport-inplace ${cygport} list >${top_srcdir}/testsuite/$test/${cygport/%.cygport/.list}
+fi
+
+# compare package filelists
+for archive in $(find -path '*/dist/*' -name '*.tar.*')
+do
+    filelist=${archive/%.tar*/.list}
+    tar -atf ${archive} >${filelist}
+
+    if [ -a ${top_srcdir}/testsuite/$test/filelists/$filelist ];
+    then
+        diff -u ${CASE_INSENSITIVE:+-i} ${top_srcdir}/testsuite/$test/filelists/$filelist $filelist
+    else
+        # if CREATE_FILELISTS is set, create the expected list file for use in future testing
+        if [ -z ${CREATE_FILELISTS+x} ]
+        then
+            echo "can't verify filelist $filelist, as expected filelist ${top_srcdir}/testsuite/$test/filelists/$filelist not found." >&2
+            missing_filelists=1
+        else
+            mkdir -p $(dirname ${top_srcdir}/testsuite/$test/filelists/$filelist)
+            cp $filelist ${top_srcdir}/testsuite/$test/filelists/$filelist
+        fi
+    fi
+done
+
+if [ -n "$missing_filelists" ]
+then
+    exit 1
+fi

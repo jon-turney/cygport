@@ -1,0 +1,8 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/bin/
+usr/lib/debug/usr/bin/cygtxc_dxtn.dll.dbg
+usr/src/debug/
+usr/src/debug/libtxc_dxtn-1.0.1-2/
+usr/src/debug/libtxc_dxtn-1.0.1-2/txc_compress_dxtn.c
+usr/src/debug/libtxc_dxtn-1.0.1-2/txc_fetch_dxtn.c

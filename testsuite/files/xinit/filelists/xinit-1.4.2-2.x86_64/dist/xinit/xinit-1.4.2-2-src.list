@@ -1,0 +1,11 @@
+xinit-1.4.2-2.src/
+xinit-1.4.2-2.src/postinstall.sh
+xinit-1.4.2-2.src/preremove.sh
+xinit-1.4.2-2.src/profile.d.csh
+xinit-1.4.2-2.src/profile.d.fish
+xinit-1.4.2-2.src/profile.d.sh
+xinit-1.4.2-2.src/README
+xinit-1.4.2-2.src/startxdmcp.bat
+xinit-1.4.2-2.src/startxwin
+xinit-1.4.2-2.src/startxwin.1
+xinit-1.4.2-2.src/xinit.cygport

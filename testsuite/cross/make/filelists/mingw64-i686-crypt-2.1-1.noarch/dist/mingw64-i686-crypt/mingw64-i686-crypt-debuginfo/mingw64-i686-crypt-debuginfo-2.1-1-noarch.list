@@ -1,0 +1,17 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/i686-w64-mingw32/
+usr/lib/debug/usr/i686-w64-mingw32/sys-root/
+usr/lib/debug/usr/i686-w64-mingw32/sys-root/mingw/
+usr/lib/debug/usr/i686-w64-mingw32/sys-root/mingw/bin/
+usr/lib/debug/usr/i686-w64-mingw32/sys-root/mingw/bin/libcrypt-0.dll.dbg
+usr/src/debug/
+usr/src/debug/mingw64-i686-crypt-2.1-1/
+usr/src/debug/mingw64-i686-crypt-2.1-1/crypt.c
+usr/src/debug/mingw64-i686-crypt-2.1-1/crypt_blowfish.c
+usr/src/debug/mingw64-i686-crypt-2.1-1/crypt_des.c
+usr/src/debug/mingw64-i686-crypt-2.1-1/crypt_md5.c
+usr/src/debug/mingw64-i686-crypt-2.1-1/crypt_r.c
+usr/src/debug/mingw64-i686-crypt-2.1-1/crypt_sha256.c
+usr/src/debug/mingw64-i686-crypt-2.1-1/crypt_sha512.c
+usr/src/debug/mingw64-i686-crypt-2.1-1/encrypt.c

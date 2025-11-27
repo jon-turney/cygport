@@ -1,0 +1,11 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/bin/
+usr/lib/debug/usr/bin/cygqoauth-1.dll.dbg
+usr/src/debug/
+usr/src/debug/qoauth-2.0.0-1/
+usr/src/debug/qoauth-2.0.0-1/src/
+usr/src/debug/qoauth-2.0.0-1/src/interface.cpp
+usr/src/debug/qoauth-2.0.0-1/src/interface.h
+usr/src/debug/qoauth-2.0.0-1/src/interface_p.h
+usr/src/debug/qoauth-2.0.0-1/src/moc_interface.cpp

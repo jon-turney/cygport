@@ -1,0 +1,6 @@
+patch-compressions-3.8-2.src/
+patch-compressions-3.8-2.src/01-test.patch.bz2
+patch-compressions-3.8-2.src/02-test.patch.gz
+patch-compressions-3.8-2.src/03-test.patch.xz
+patch-compressions-3.8-2.src/04-test.patch.zst
+patch-compressions-3.8-2.src/patch-compressions.cygport

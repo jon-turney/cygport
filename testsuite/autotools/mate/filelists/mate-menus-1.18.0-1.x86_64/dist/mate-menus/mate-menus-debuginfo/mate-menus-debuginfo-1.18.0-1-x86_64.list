@@ -1,0 +1,13 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/bin/
+usr/lib/debug/usr/bin/cygmate-menu-2.dll.dbg
+usr/src/debug/
+usr/src/debug/mate-menus-1.18.0-1/
+usr/src/debug/mate-menus-1.18.0-1/libmenu/
+usr/src/debug/mate-menus-1.18.0-1/libmenu/canonicalize.c
+usr/src/debug/mate-menus-1.18.0-1/libmenu/desktop-entries.c
+usr/src/debug/mate-menus-1.18.0-1/libmenu/entry-directories.c
+usr/src/debug/mate-menus-1.18.0-1/libmenu/matemenu-tree.c
+usr/src/debug/mate-menus-1.18.0-1/libmenu/menu-layout.c
+usr/src/debug/mate-menus-1.18.0-1/libmenu/menu-monitor.c

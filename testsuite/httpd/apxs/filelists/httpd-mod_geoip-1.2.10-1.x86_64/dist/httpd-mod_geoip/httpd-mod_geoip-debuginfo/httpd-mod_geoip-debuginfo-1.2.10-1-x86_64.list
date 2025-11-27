@@ -1,0 +1,9 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/lib/
+usr/lib/debug/usr/lib/httpd/
+usr/lib/debug/usr/lib/httpd/modules/
+usr/lib/debug/usr/lib/httpd/modules/mod_geoip.so.dbg
+usr/src/debug/
+usr/src/debug/httpd-mod_geoip-1.2.10-1/
+usr/src/debug/httpd-mod_geoip-1.2.10-1/mod_geoip.c

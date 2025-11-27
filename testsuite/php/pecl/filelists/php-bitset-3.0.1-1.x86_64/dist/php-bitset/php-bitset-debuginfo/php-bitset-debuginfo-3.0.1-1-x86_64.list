@@ -1,0 +1,10 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/lib/
+usr/lib/debug/usr/lib/php/
+usr/lib/debug/usr/lib/php/20180731/
+usr/lib/debug/usr/lib/php/20180731/bitset.dll.dbg
+usr/src/debug/
+usr/src/debug/php-bitset-3.0.1-1/
+usr/src/debug/php-bitset-3.0.1-1/bitset.c
+usr/src/debug/php-bitset-3.0.1-1/php_bitset.h

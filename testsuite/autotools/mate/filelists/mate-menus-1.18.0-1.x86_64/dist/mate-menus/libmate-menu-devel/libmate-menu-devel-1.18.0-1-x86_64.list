@@ -1,0 +1,6 @@
+usr/include/
+usr/include/mate-menus/
+usr/include/mate-menus/matemenu-tree.h
+usr/lib/libmate-menu.dll.a
+usr/lib/pkgconfig/
+usr/lib/pkgconfig/libmate-menu.pc

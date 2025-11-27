@@ -1,0 +1,10 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/i686-w64-mingw32/
+usr/lib/debug/usr/i686-w64-mingw32/sys-root/
+usr/lib/debug/usr/i686-w64-mingw32/sys-root/mingw/
+usr/lib/debug/usr/i686-w64-mingw32/sys-root/mingw/bin/
+usr/lib/debug/usr/i686-w64-mingw32/sys-root/mingw/bin/iconv.dll.dbg
+usr/src/debug/
+usr/src/debug/mingw64-i686-win-iconv-0.0.8-1/
+usr/src/debug/mingw64-i686-win-iconv-0.0.8-1/win_iconv.c

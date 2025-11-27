@@ -1,0 +1,11 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/bin/
+usr/lib/debug/usr/bin/cygSDL2_net-2-0-0.dll.dbg
+usr/src/debug/
+usr/src/debug/SDL2_net-2.0.1-1/
+usr/src/debug/SDL2_net-2.0.1-1/SDLnet.c
+usr/src/debug/SDL2_net-2.0.1-1/SDLnetselect.c
+usr/src/debug/SDL2_net-2.0.1-1/SDLnetTCP.c
+usr/src/debug/SDL2_net-2.0.1-1/SDLnetUDP.c
+usr/src/debug/SDL2_net-2.0.1-1/SDL_net.h

@@ -1,0 +1,9 @@
+usr/include/
+usr/include/libnotify/
+usr/include/libnotify/notification.h
+usr/include/libnotify/notify-enum-types.h
+usr/include/libnotify/notify-features.h
+usr/include/libnotify/notify.h
+usr/lib/libnotify.dll.a
+usr/lib/pkgconfig/
+usr/lib/pkgconfig/libnotify.pc

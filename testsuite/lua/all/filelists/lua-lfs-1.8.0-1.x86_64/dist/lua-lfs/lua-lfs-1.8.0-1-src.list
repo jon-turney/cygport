@@ -1,0 +1,5 @@
+lua-lfs-1.8.0-1.src/
+lua-lfs-1.8.0-1.src/1.8.0-lfs_c.patch
+lua-lfs-1.8.0-1.src/1.8.0-Makefile.patch
+lua-lfs-1.8.0-1.src/lua-lfs.cygport
+lua-lfs-1.8.0-1.src/luafilesystem-1.8.0.tar.gz

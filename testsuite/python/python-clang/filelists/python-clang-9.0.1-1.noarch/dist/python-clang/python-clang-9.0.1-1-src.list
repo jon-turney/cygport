@@ -1,0 +1,4 @@
+python-clang-9.0.1-1.src/
+python-clang-9.0.1-1.src/3.7.1-cygwin-ctypes.patch
+python-clang-9.0.1-1.src/llvm-project-9.0.1.tar.bz2
+python-clang-9.0.1-1.src/python-clang.cygport

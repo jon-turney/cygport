@@ -1,0 +1,13 @@
+usr/include/qt5xdgiconloader/
+usr/include/qt5xdgiconloader/2.0.0/
+usr/include/qt5xdgiconloader/2.0.0/private/
+usr/include/qt5xdgiconloader/2.0.0/private/xdgiconloader/
+usr/include/qt5xdgiconloader/2.0.0/private/xdgiconloader/xdgiconloader_p.h
+usr/include/qt5xdgiconloader/xdgiconloader_export.h
+usr/lib/libQt5XdgIconLoader.dll.a
+usr/lib/pkgconfig/Qt5XdgIconLoader.pc
+usr/share/cmake/qt5xdgiconloader/
+usr/share/cmake/qt5xdgiconloader/qt5xdgiconloader-config-version.cmake
+usr/share/cmake/qt5xdgiconloader/qt5xdgiconloader-config.cmake
+usr/share/cmake/qt5xdgiconloader/qt5xdgiconloader-targets-relwithdebinfo.cmake
+usr/share/cmake/qt5xdgiconloader/qt5xdgiconloader-targets.cmake

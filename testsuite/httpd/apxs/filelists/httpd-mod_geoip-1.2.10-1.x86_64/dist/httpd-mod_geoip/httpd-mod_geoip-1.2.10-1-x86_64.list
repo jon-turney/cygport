@@ -1,0 +1,16 @@
+etc/
+etc/httpd/
+etc/httpd/conf.modules.d/
+etc/httpd/conf.modules.d/mod_geoip.conf
+usr/
+usr/lib/
+usr/lib/httpd/
+usr/lib/httpd/modules/
+usr/lib/httpd/modules/mod_geoip.so
+usr/share/
+usr/share/doc/
+usr/share/doc/httpd-mod_geoip/
+usr/share/doc/httpd-mod_geoip/Changes
+usr/share/doc/httpd-mod_geoip/LICENSE
+usr/share/doc/httpd-mod_geoip/README.md
+usr/share/doc/httpd-mod_geoip/README.php

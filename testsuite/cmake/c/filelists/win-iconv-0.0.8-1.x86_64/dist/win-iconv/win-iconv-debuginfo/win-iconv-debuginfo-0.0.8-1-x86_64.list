@@ -1,0 +1,8 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/bin/
+usr/lib/debug/usr/bin/cygiconv-3.dll.dbg
+usr/lib/debug/usr/bin/iconv.exe.dbg
+usr/src/debug/
+usr/src/debug/win-iconv-0.0.8-1/
+usr/src/debug/win-iconv-0.0.8-1/win_iconv.c

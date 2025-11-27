@@ -1,0 +1,14 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/bin/
+usr/lib/debug/usr/bin/cygnotify-4.dll.dbg
+usr/lib/debug/usr/bin/notify-send.exe.dbg
+usr/src/debug/
+usr/src/debug/libnotify-0.7.7-1/
+usr/src/debug/libnotify-0.7.7-1/libnotify/
+usr/src/debug/libnotify-0.7.7-1/libnotify/notification.c
+usr/src/debug/libnotify-0.7.7-1/libnotify/notify-enum-types.c
+usr/src/debug/libnotify-0.7.7-1/libnotify/notify-marshal.c
+usr/src/debug/libnotify-0.7.7-1/libnotify/notify.c
+usr/src/debug/libnotify-0.7.7-1/tools/
+usr/src/debug/libnotify-0.7.7-1/tools/notify-send.c

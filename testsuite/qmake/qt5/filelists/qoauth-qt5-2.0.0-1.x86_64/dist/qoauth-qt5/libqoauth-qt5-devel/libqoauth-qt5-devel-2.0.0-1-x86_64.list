@@ -1,0 +1,8 @@
+usr/include/qt5/QtOAuth/
+usr/include/qt5/QtOAuth/interface.h
+usr/include/qt5/QtOAuth/qoauth_global.h
+usr/include/qt5/QtOAuth/qoauth_namespace.h
+usr/include/qt5/QtOAuth/QtOAuth
+usr/lib/libqoauth-qt5.dll.a
+usr/lib/pkgconfig/qoauth-qt5.pc
+usr/lib/qt5/mkspecs/features/oauth.prf

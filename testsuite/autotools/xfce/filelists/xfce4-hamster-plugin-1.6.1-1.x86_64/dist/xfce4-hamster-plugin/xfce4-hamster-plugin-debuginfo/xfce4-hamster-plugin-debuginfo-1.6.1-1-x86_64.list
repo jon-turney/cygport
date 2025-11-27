@@ -1,0 +1,17 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/lib/
+usr/lib/debug/usr/lib/xfce4/
+usr/lib/debug/usr/lib/xfce4/panel/
+usr/lib/debug/usr/lib/xfce4/panel/plugins/
+usr/lib/debug/usr/lib/xfce4/panel/plugins/cyghamster.dll.dbg
+usr/src/debug/
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/panel-plugin/
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/panel-plugin/button.c
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/panel-plugin/hamster.c
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/panel-plugin/plugin.c
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/panel-plugin/settings.c
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/panel-plugin/util.c
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/panel-plugin/view.c
+usr/src/debug/xfce4-hamster-plugin-1.6.1-1/panel-plugin/windowserver.c

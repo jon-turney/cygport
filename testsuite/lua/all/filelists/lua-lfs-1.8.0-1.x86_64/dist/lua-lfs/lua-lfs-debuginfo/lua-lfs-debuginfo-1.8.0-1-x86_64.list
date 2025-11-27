@@ -1,0 +1,11 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/lib/
+usr/lib/debug/usr/lib/lua/
+usr/lib/debug/usr/lib/lua/5.3/
+usr/lib/debug/usr/lib/lua/5.3/lfs.so.dbg
+usr/src/debug/
+usr/src/debug/lua-lfs-1.8.0-1/
+usr/src/debug/lua-lfs-1.8.0-1/5.3/
+usr/src/debug/lua-lfs-1.8.0-1/5.3/src/
+usr/src/debug/lua-lfs-1.8.0-1/5.3/src/lfs.c

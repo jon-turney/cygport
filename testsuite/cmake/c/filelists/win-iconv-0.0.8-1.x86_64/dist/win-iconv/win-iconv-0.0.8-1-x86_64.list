@@ -1,0 +1,13 @@
+usr/
+usr/bin/
+usr/bin/cygiconv-3.dll
+usr/bin/iconv.exe
+usr/include/
+usr/include/iconv.h
+usr/lib/
+usr/lib/libiconv.dll.a
+usr/share/
+usr/share/doc/
+usr/share/doc/win-iconv/
+usr/share/doc/win-iconv/ChangeLog
+usr/share/doc/win-iconv/readme.txt

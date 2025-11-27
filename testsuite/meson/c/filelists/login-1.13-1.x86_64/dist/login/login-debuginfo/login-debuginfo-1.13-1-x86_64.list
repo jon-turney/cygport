@@ -1,0 +1,11 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/bin/
+usr/lib/debug/usr/bin/lastlog.exe.dbg
+usr/lib/debug/usr/bin/login.exe.dbg
+usr/src/debug/
+usr/src/debug/login-1.13-1/
+usr/src/debug/login-1.13-1/lastlog.c
+usr/src/debug/login-1.13-1/login.c
+usr/src/debug/login-1.13-1/winpriv.c
+usr/src/debug/login-1.13-1/winsec.c
