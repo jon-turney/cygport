@@ -496,16 +496,17 @@ __pkg_diff() {
 
 	if [ -z "${CYGWIN_FILES}" ]
 	then
-		# diff exits >0 when targets differ, hence catch exception with true
+		# diff exits with status 1 when targets differ, 2 when there's an error
+		# so check exit status to detect errors
 		if [ "${SRC_DIR}" = "." ]
 		then
 			diff -urN -x '*~' \
 				${origsrcdir##*/}/CYGWIN-PATCHES ${srcdir##*/}/CYGWIN-PATCHES \
-				> ${patchdir}/${cygwin_patchfile} || true;
+				> ${patchdir}/${cygwin_patchfile} || if [ $? -gt 1 ] ; then error "diff failed"; fi
 		else
 			diff -urN -x '*~' \
 				${origsrcdir##*/}/${SRC_DIR}/CYGWIN-PATCHES ${srcdir##*/}/${SRC_DIR}/CYGWIN-PATCHES \
-				> ${patchdir}/${cygwin_patchfile} || true;
+				> ${patchdir}/${cygwin_patchfile} || if [ $? -gt 1 ] ; then error "diff failed"; fi
 		fi
 		optional_patchfiles=${patchdir}/${cygwin_patchfile}
 	fi
@@ -517,7 +518,7 @@ __pkg_diff() {
 	else
 		diff -uprN ${diff_excludes_x} \
 			${origsrcdir##*/} ${srcdir##*/} \
-			> ${patchdir}/${src_patchfile} || true;
+			> ${patchdir}/${src_patchfile} || if [ $? -gt 1 ] ; then error "diff failed"; fi
 	fi
 
 	sed -b -e '/^diff -u/d' -i ${optional_patchfiles} ${patchdir}/${src_patchfile};
