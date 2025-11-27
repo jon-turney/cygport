@@ -657,6 +657,7 @@ for suffix, mode, type in imp.get_suffixes(): print(suffix)')
 
 	# add perl5_0xy requirement if linked with cygperl5_xy.dll
 	# add ruby_xy requirement if linked with cygrubyxy0.dll
+	# add php_x_y requirement if linked with cygphp-x-y.dll
 	for dll in $(echo ${alldeps} | tr \\n ' ' ) ; do
 	    case "${dll##*/}" in
 		cygperl5_[0-9][0-9].dll)
@@ -668,6 +669,12 @@ for suffix, mode, type in imp.get_suffixes(): print(suffix)')
 		    rbver="${dll##*cygruby}"
 		    rbver="${rbver%%0.dll}"
 		    echo "ruby_${rbver}"
+		    ;;
+		cygphp-[0-9]-[0-9].dll)
+		    phpver="${dll##*cygphp-}"
+		    phpver="${phpver%%.dll}"
+		    phpver="${phpver//-/_}"
+		    echo "php_${phpver}"
 		    ;;
 	    esac
 	done
