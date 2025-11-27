@@ -391,8 +391,9 @@ __target_is_embedded() {
 #****
 #****d* Globals/C
 #  DESCRIPTION
-#  The directory where Cygwin READMEs, custom post-install scripts, shell
-#  profile scripts, PKG.list files, and other Cygwin-specific files are placed.
+#  The directory where Cygwin READMEs, custom post-install and pre-remove
+#  scripts, shell profile scripts, PKG.list files, and other Cygwin-specific
+#  files are placed.
 #  NOTE
 #  Providing setup.hint or PKG.hint files in this directory (rather than
 #  allowing .hint files to be automatically generated) is an obsolete feature
