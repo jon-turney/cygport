@@ -500,10 +500,12 @@ __pkg_diff() {
 		# so check exit status to detect errors
 		if [ "${SRC_DIR}" = "." ]
 		then
+			mkdir -p ${origsrcdir##*/}/CYGWIN-PATCHES
 			diff -urN -x '*~' \
 				${origsrcdir##*/}/CYGWIN-PATCHES ${srcdir##*/}/CYGWIN-PATCHES \
 				> ${patchdir}/${cygwin_patchfile} || if [ $? -gt 1 ] ; then error "diff failed"; fi
 		else
+			mkdir -p ${origsrcdir##*/}/${SRC_DIR}/CYGWIN-PATCHES
 			diff -urN -x '*~' \
 				${origsrcdir##*/}/${SRC_DIR}/CYGWIN-PATCHES ${srcdir##*/}/${SRC_DIR}/CYGWIN-PATCHES \
 				> ${patchdir}/${cygwin_patchfile} || if [ $? -gt 1 ] ; then error "diff failed"; fi
