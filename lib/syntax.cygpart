@@ -343,6 +343,18 @@ __target_is_embedded() {
 #  be able to extract the line defining RELEASE from the file and evaluate it on
 #  its own.
 #****
+#****v* Globals/EPOCH
+#  DESCRIPTION
+#  The upstream versioning epoch.
+#
+#  NOTE
+#  The epoch is an unsigned integer. Increment it when the upstream version
+#  numbering scheme changes in such a way that the first number in the new
+#  scheme would normally be considered to be older than existing versions.
+#
+#  Use this with care, as it can be confusing. This is intended as a last resort
+#  to solve version comparison issues
+#****
 #****d* Globals/PN
 #  DESCRIPTION
 #  A read-only alias for NAME.
