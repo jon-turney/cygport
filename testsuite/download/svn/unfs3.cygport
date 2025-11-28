@@ -22,6 +22,7 @@ REQUIRES="rpcbind"
 
 CFLAGS+=" -I/usr/include/tirpc"
 LIBS="-ltirpc"
+MAKEOPTS="-j1"
 
 src_compile() {
 	cd ${S}
