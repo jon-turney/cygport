@@ -94,6 +94,10 @@ fetch() {
 	then
 		inform "Using ${urifile} from DISTDIR"
 		return 0
+	elif defined _CYGPORT_RESTRICT_fetch_
+	then
+		inform "Fetching from ${uri} inhibited by RESTRICT"
+		return 1
 	elif check_prog wget
 	then
 		prog=wget

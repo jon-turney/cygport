@@ -6,8 +6,13 @@ shopt -s extglob
 test=$1
 
 case $test in
-download/*) DISTDIR= ;;
-*) DISTDIR=${top_srcdir}/testsuite/distdir ;;
+download/*)
+        DISTDIR=
+   ;;
+*)
+        DISTDIR=${top_srcdir}/testsuite/distdir
+        RESTRICT=fetch
+   ;;
 esac
 
 test -d ${top_builddir}/testsuite/$test || mkdir -p ${top_builddir}/testsuite/$test
@@ -15,7 +20,7 @@ cd ${top_builddir}/testsuite/$test
 
 cp -f ${top_srcdir}/testsuite/$test/!(hints) .
 
-DISTDIR=${DISTDIR} ${top_builddir}/bin/cygport-inplace *.cygport clean get all
+DISTDIR=${DISTDIR} RESTRICT=${RESTRICT} ${top_builddir}/bin/cygport-inplace *.cygport clean get all
 
 # compare hints
 for hint in $(find -name \*.hint)
