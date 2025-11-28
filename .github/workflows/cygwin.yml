@@ -76,6 +76,7 @@ jobs:
         libicu-devel,^
         liblua-devel,^
         liblzma-devel,^
+        libncurses-devel,^
         libnotify-devel,^
         libpango1.0-devel,^
         libpcre2-devel,^

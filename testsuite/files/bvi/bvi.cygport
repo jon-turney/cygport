@@ -1,0 +1,21 @@
+NAME="bvi"
+VERSION=1.4.2
+RELEASE=1
+LICENSE="GPL-3.0-or-later"
+CATEGORY="Editors"
+SUMMARY="Binary vi-like editor"
+DESCRIPTION="A display-oriented editor for binary files, based on the vi text editor."
+HOMEPAGE="https://bvi.sourceforge.net/"
+SRC_URI="http://prdownloads.sourceforge.net/bvi/bvi-${VERSION}.src.tar.gz"
+
+src_compile () {
+	cd ${S}
+	cygautoreconf
+	lndirs
+	cd ${B}
+	cygconf
+	cygmake
+}
+
+DIFF_EXCLUDES="install-sh"
+BUILD_REQUIRES="libncurses-devel"

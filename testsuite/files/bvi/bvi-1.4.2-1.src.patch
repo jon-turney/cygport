@@ -1,0 +1,13 @@
+--- origsrc/bvi-1.4.2/Makefile.in	2022-02-08 19:52:59.000000000 +0000
++++ src/bvi-1.4.2/Makefile.in	2025-11-29 11:48:36.878365600 +0000
+@@ -74,8 +74,8 @@ install: all installdirs
+ 	@$(INSTALL_DATA) bmore.help $(helpdir)
+ 	@if [ -f $(bindir)/bview ]; then rm $(bindir)/bview; fi
+ 	@if [ -f $(bindir)/bvedit ]; then rm $(bindir)/bvedit; fi
+-	@ln $(bindir)/bvi $(bindir)/bview
+-	@ln $(bindir)/bvi $(bindir)/bvedit
++	@ln -s $(bindir)/bvi $(bindir)/bview
++	@ln -s $(bindir)/bvi $(bindir)/bvedit
+ 
+ installdirs:
+ 	$(SHELL) ${srcdir}/mkinstalldirs $(bindir) $(helpdir) $(man1dir)

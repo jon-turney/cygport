@@ -1,0 +1,16 @@
+usr/lib/debug/
+usr/lib/debug/usr/
+usr/lib/debug/usr/bin/
+usr/lib/debug/usr/bin/bmore.exe.dbg
+usr/lib/debug/usr/bin/bvi.exe.dbg
+usr/src/debug/
+usr/src/debug/bvi-1.4.2-1/
+usr/src/debug/bvi-1.4.2-1/bmore.c
+usr/src/debug/bvi-1.4.2-1/bm_unix.c
+usr/src/debug/bvi-1.4.2-1/bvi.c
+usr/src/debug/bvi-1.4.2-1/comm.c
+usr/src/debug/bvi-1.4.2-1/edit.c
+usr/src/debug/bvi-1.4.2-1/io.c
+usr/src/debug/bvi-1.4.2-1/re.c
+usr/src/debug/bvi-1.4.2-1/recomp.c
+usr/src/debug/bvi-1.4.2-1/set.c

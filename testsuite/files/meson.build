@@ -1,1 +1,1 @@
-tests += [['files/xinit', 720]]
+tests += [['files/xinit', 720], ['files/bvi']]

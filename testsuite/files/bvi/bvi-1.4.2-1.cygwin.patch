@@ -1,0 +1,82 @@
+--- origsrc/bvi-1.4.2/CYGWIN-PATCHES/bvi.README	1970-01-01 09:00:00.000000000 +0900
++++ src/bvi-1.4.2/CYGWIN-PATCHES/bvi.README	2024-02-21 21:41:01.843446600 +0900
+@@ -0,0 +1,79 @@
++bvi
++------------------------------------------
++
++Binary vi-like editor
++
++A display-oriented editor for binary files, based on the vi text
++editor.
++
++Runtime requirements:
++  cygwin
++  libncursesw10
++
++Build requirements:
++  cygwin
++  libncurses-devel
++
++Canonical homepage:
++  http://sourceforge.net/projects/bvi
++  http://packages.debian.org/bvi
++
++Canonical download:
++  See also
++
++Version control repository:
++
++Mailing list:
++
++Forum / Wiki:
++
++IRC channel:
++
++Upstream contact:
++  Maintainer: Gerhard Buergmann <buergmann@users.sourceforge.net>
++  Bugs: Sourceforge
++
++
++License:
++  GPL
++
++Language:
++  C
++
++------------------------------------------
++
++Build instructions:
++  unpack bvi-*-src.tar.bz2
++    if you use setup to install this source package, it will be
++    unpacked under /usr/src automatically
++  cd /usr/src
++  ./bvi*.sh all
++
++------------------------------------------
++
++Files included in the binary distribution:
++  See Cygwin package archive
++
++------------------------------------------
++
++Port Notes:
++- bvedit, bview: No manual pages. They are also same as "bvi",
++  so they were not installed. See Makefile::install and hardlinking.
++
++----- version 1.4.2-1 -----
++- New release 2024-02-21 Takashi Yano
++
++----- version 1.3.2-3 -----
++- New release 2015-02-12 Jari Aalto
++- Rework patches
++
++----- version 1.3.2-2 -----
++- Cygwin package update 2013-09-14 Jari Aalto
++- Compile with libncursesw10
++
++----- version 1.3.2-1 -----
++- Initial release 2008-03-06 Jari Aalto
++
++Cygwin port maintained by: Jari Aalto <jari.aalto@cante.net>
++                           Takashi Yano <takashi.yano@nifty.ne.jp>
++Copyright (C) 2008-2015 Jari Aalto; Licensed under GPL v2 or later

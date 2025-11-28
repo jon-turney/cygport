@@ -1,0 +1,8 @@
+category: Editors
+build-depends: cygport libncurses-devel
+sdesc: "Binary vi-like editor"
+ldesc: "A display-oriented editor for binary files, based on the vi text editor."
+skip:
+
+homepage: https://bvi.sourceforge.net/
+license: GPL-3.0-or-later
