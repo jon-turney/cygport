@@ -114,6 +114,9 @@ jobs:
         python39-pip,^
         python39-setuptools,^
         python39-wheel,^
+        python39-html5lib,^
+        python39-lxml,^
+        python39-markdown,^
         robodoc,^
         ruby,^
         ruby-rack,^
