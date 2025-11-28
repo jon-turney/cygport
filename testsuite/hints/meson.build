@@ -1,1 +1,1 @@
-tests += [['hints/single'], ['hints/multiple']]
+tests += [['hints/single'], ['hints/multiple'], ['hints/epoch']]

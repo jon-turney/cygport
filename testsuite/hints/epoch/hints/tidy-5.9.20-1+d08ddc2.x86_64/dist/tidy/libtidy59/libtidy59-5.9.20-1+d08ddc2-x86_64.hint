@@ -1,0 +1,8 @@
+category: Text
+requires: cygwin libgcc1
+sdesc: "HTML pretty printer library (runtime)"
+ldesc: "Dave Raggett's excellent HTML Tidy program, with additional
+patches and refactored into a free-standing C library."
+external-source: tidy
+epoch: 1
+

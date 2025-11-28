@@ -1,0 +1,7 @@
+category: Text
+requires: cygwin libtidy59
+sdesc: "HTML pretty printer"
+ldesc: "Dave Raggett's excellent HTML Tidy program, with additional
+patches and refactored into a free-standing C library."
+epoch: 1
+

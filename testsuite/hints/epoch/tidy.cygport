@@ -1,0 +1,41 @@
+inherit cmake
+NAME="tidy"
+EPOCH=1
+VERSION=5.9.20
+RELEASE="1+d08ddc2"
+
+LICENSE="BSD-3-Clause-Clear"
+CATEGORY="Text"
+SUMMARY="HTML pretty printer"
+DESCRIPTION="Dave Raggett's excellent HTML Tidy program, with additional
+patches and refactored into a free-standing C library."
+HOMEPAGE="https://www.html-tidy.org/"
+
+#SRC_URI="https://github.com/htacg/tidy-html5/archive/refs/tags/${PV}.tar.gz"
+#SRC_DIR="tidy-html5-${PV}"
+
+GIT_URI="https://github.com/htacg/tidy-html5.git"
+GIT_REV="d08ddc2"
+SRC_DIR="tidy-html5"
+
+inherit git
+PATCH_URI="
+	5.8.0-nostatic.patch
+	5.9.20-cmake-version.patch
+"
+
+PKG_NAMES="tidy libtidy59 libtidy-devel"
+
+tidy_CONTENTS='usr/bin/*.exe usr/share/'
+libtidy59_SUMMARY="${SUMMARY} library (runtime)"
+libtidy59_CONTENTS="usr/bin/cygtidy-59.dll"
+ibtidy_devel_SUMMARY="${SUMMARY} library (development)"
+libtidy_devel_CONTENTS='usr/include/ usr/lib/'
+
+src_compile() {
+	cd ${B}
+	cygcmake
+	cygmake
+}
+
+HTMLDOCS="htmldoc/*"

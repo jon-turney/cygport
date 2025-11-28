@@ -1,0 +1,8 @@
+category: Text
+requires: libtidy59 pkg-config
+sdesc: "HTML pretty printer"
+ldesc: "Dave Raggett's excellent HTML Tidy program, with additional
+patches and refactored into a free-standing C library."
+external-source: tidy
+epoch: 1
+

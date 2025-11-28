@@ -1,0 +1,34 @@
+--- origsrc/tidy-html5-5.8.0/CMakeLists.txt	2021-07-17 01:45:24.000000000 +0200
++++ CMakeLists.txt	2025-01-08 13:37:01.808992200 +0100
+@@ -91,12 +91,13 @@ endif ()
+ #   shared library can be turned off if not needed. The console program
+ #   can be configured for static linking or dynamic linking.
+ #------------------------------------------------------------------------
+-set( LIB_TYPE STATIC )  # set default message
++set( LIB_TYPE SHARED)  # set default message
+ 
++option( BUILD_STATIC_LIB "Set OFF to NOT build static library"     OFF  )
+ option( BUILD_SHARED_LIB "Set OFF to NOT build shared library"     ON  )
+ 
+ # Issue #326 - Allow linkage choice of console app tidy
+-option( TIDY_CONSOLE_SHARED "Set ON to link with shared(DLL) lib." OFF )
++option( TIDY_CONSOLE_SHARED "Set ON to link with shared(DLL) lib." ON )
+ 
+ if (TIDY_CONSOLE_SHARED)
+     if (NOT BUILD_SHARED_LIB)
+@@ -397,6 +398,7 @@ endif ()
+ # Static Library
+ #   The static library always builds.
+ #------------------------------------------------------------------------
++if (BUILD_STATIC_LIB)
+ set(name tidy-static)
+ add_library ( ${name} STATIC ${CFILES} ${HFILES} ${LIBHFILES} )
+ if (WIN32)
+@@ -410,6 +412,7 @@ endif ()
+ if (NOT TIDY_CONSOLE_SHARED) # user wants default static linkage
+     list ( APPEND add_LIBS ${name} )
+ endif ()    
++endif ()
+ install(TARGETS ${name}
+         RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+         ARCHIVE DESTINATION ${LIB_INSTALL_DIR}

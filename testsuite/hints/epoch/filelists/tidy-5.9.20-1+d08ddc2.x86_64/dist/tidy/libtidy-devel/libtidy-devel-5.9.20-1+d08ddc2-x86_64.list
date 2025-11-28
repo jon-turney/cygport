@@ -1,0 +1,9 @@
+usr/include/
+usr/include/tidy.h
+usr/include/tidybuffio.h
+usr/include/tidyenum.h
+usr/include/tidyplatform.h
+usr/lib/
+usr/lib/libtidy.dll.a
+usr/lib/pkgconfig/
+usr/lib/pkgconfig/tidy.pc

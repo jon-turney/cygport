@@ -1,0 +1,10 @@
+category: Text
+build-depends: cygport 
+sdesc: "HTML pretty printer"
+ldesc: "Dave Raggett's excellent HTML Tidy program, with additional
+patches and refactored into a free-standing C library."
+skip:
+
+homepage: https://www.html-tidy.org/
+license: BSD-3-Clause-Clear
+epoch: 1
