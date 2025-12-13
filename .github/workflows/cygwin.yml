@@ -118,6 +118,9 @@ jobs:
         python39-html5lib,^
         python39-lxml,^
         python39-markdown,^
+        python312-pip,^
+        python312-setuptools,^
+        python312-wheel,^
         robodoc,^
         ruby,^
         ruby-rack,^
@@ -131,6 +134,11 @@ jobs:
     - name: Fixup Cygwin installation
       run: |
         bash --login
+        bash -c '/usr/sbin/alternatives --set pip3 /usr/bin/pip3.9'
+        bash -c '/usr/sbin/alternatives --set pydoc3 /usr/bin/pydoc3.9'
+        bash -c '/usr/sbin/alternatives --set python /usr/bin/python3.9'
+        bash -c '/usr/sbin/alternatives --set python3 /usr/bin/python3.9'
+        bash -c '/usr/sbin/alternatives --set python3-config /usr/bin/python3.9-config'
         bash -c 'git config --system --add safe.directory /cygdrive/d/a/cygport/cygport'
         bash -c 'git config --system --add safe.directory /cygdrive/d/a/cygport/cygport/data/gnuconfig'
       continue-on-error: true

@@ -62,12 +62,13 @@ inherit python.org
 #  DESCRIPTION
 #  A colon-seperated list of version(s) for which this module should be built.
 #  Some aliases are also accepted:
-#  * all: all supported 3.y versions (currently: 3.6 through 3.9)
-#  * future: the default and upcoming 3.y versions (currently: 3.9, 3.10)
-#  * default: the default 3.y version(s) (currently: 3.8, 3.9)
+#  * all: all supported 3.y versions (currently: 3.8, 3.9, 3.12)
+#  * future: the default and upcoming 3.y versions (currently: 3.9, 3.12)
+#  * default: the default 3.y version(s) (currently: 3.9, 3.12)
 #  * 2: the default 2.x version (permanently 2.7)
 #  * 3: the default 3.x version (currently: 3.9)
-#  This variable must be defined before inheriting python-wheel.cygclass.
+#
+#  If defined, this variable must be set before inheriting python-wheel.cygclass.
 #  If undefined, "default" is assumed.
 #  NOTES
 #  * Python 2.7 is no longer supported upstream, and all code should be moving
@@ -91,9 +92,9 @@ _tmp_wheel_v=
 for ver in ${PYTHON_WHEEL_VERSIONS//:/ }
 do
 	case "${ver}" in
-	all)		_tmp_wheel_v+=3.6:3.7:3.8:3.9: ;;
-	future)		_tmp_wheel_v+=3.9:3.10: ;;
-	default)	_tmp_wheel_v+=3.8:3.9: ;;
+	all)		_tmp_wheel_v+=3.8:3.9:3.12: ;;
+	future)	_tmp_wheel_v+=3.9:3.12: ;;
+	default)	_tmp_wheel_v+=3.9:3.12: ;;
 	2)		_tmp_wheel_v+=2.7: ;;
 	3)		_tmp_wheel_v+=3.9: ;;
 	*)		_tmp_wheel_v+=$ver: ;;
