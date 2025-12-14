@@ -154,16 +154,24 @@ fi
 #  SYNOPSIS
 #  python_wheel_compile [OPTIONS]
 #  DESCRIPTION
-#  If a setup.py file is present, runs the setup.py 'bdist_wheel' command, to
-#  which any arguments are passed.  Otherwise, for a PEP 518 conformant source
-#  tree, runs 'pip wheel'.
+#  Runs the 'pip wheel' command to build python wheel from a setup.py or a PEP
+#  518 conformant source tree.
+#
+#  Any arguments provided will be passed as arguments to 'setup.py bdist_wheel',
+#  if that is invoked by the build.
 #****
 python_wheel_compile() {
 	local ver
+	local bdist_args
 
 	if [ ! -e pyproject.toml ] && [ ! -e setup.py ] && [ ! -e setup.cfg ]
 	then
 		error "No pyproject.toml (PEP 518), setup.cfg or setup.py detected in source tree"
+	fi
+
+	if [ $# -gt 0 ]
+	then
+		bdist_args="--build-option ${@}"
 	fi
 
 	for ver in ${PYTHON_WHEEL_VERSIONS//:/ }
@@ -171,14 +179,14 @@ python_wheel_compile() {
 		[ ! -d build/lib ] || find build/lib -delete
 		if [ ! -f dist/*-py2.py3*-none-any.whl -a ! -f dist/*py${ver:0:1}-none-any.whl ]
 		then
-			pip${ver} wheel --no-deps -w dist . || error "pip${ver} wheel failed"
+			pip${ver} wheel --no-deps -w dist ${bdist_args} . || error "pip${ver} wheel failed"
 		fi
 	done
 }
 
 #****I* python-wheel.cygclass/python_wheel_install
 #  SYNOPSIS
-#  python_wheel_install [OPTIONS]
+#  python_wheel_install
 #  DESCRIPTION
 #  Installs the previously built wheel into $D.
 #****
