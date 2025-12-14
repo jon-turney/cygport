@@ -196,15 +196,31 @@ python_wheel_install() {
 		then
 			# Universal wheels can be installed on all versions of Python
 			whl="*-py2.py3*-none-any.whl"
+
+			if [ "${ARCH}" != "noarch" ]
+			then
+				   warning "A universal wheel was produced, but ARCH=noarch is not set"
+			fi
+
 		elif [ -f dist/*-py${ver:0:1}-none-any.whl ]
 		then
 			# not all noarch wheels are officially universal
 			whl="*-py${ver:0:1}-none-any.whl"
+
+			if [ "${ARCH}" != "noarch" ]
+			then
+				   warning "A pure python wheel was produced, but ARCH=noarch is not set"
+			fi
+
 		elif [ -f dist/*-cp${ver/.}-*cygwin_*_${ARCH}.whl ]
 		then
 			whl="*-cp${ver/.}-*cygwin_*_${ARCH}.whl"
 		else
-			error "unknown wheel filename"
+
+			inform "This error occurs when ARCH=noarch is set but a platform wheel was produced; otherwise it indicates a bug in cygport"
+			whl=$(cd dist ; ls *.whl)
+			error "unknown wheel filename: ${whl}"
+
 		fi
 
 		# ENSUREPIP_OPTIONS not present: pip, pipX, pipX.Y, easy_install, easy_install-X.Y
