@@ -23,15 +23,19 @@
 
 #****h* Cygclasses/python3-wheel.cygclass
 #  DESCRIPTION
-#  Wheels are the new standard for installing Python libraries and programs.
-#  The build is defined by a setup.py file in the top source directory, which
-#  controls the installation of files and the building of C Python extensions.
-#  Many such packages are hosted on the Python Package Index (PyPI).
+#  Wheels are the standard for installing Python libraries and programs.  The
+#  build is defined by a PEP 518 conformant source tree, or by a top-level
+#  setup.cfg or setup.py file in the source directory, which controls the
+#  installation of files and the building of C Python extensions.  Many such
+#  packages are hosted on the Python Package Index (PyPI).
 #
-#  This cygclass handles the building of wheel-based Python 3 packages, for
-#  use by packages which no longer support Python 2, or for those which are
-#  primarily programs and not modules.  Python module packages which support
-#  both Python 2 and 3 should use python-wheel.cygclass instead.
+#  This cygclass handles the building of wheel-based Python 3 packages for a
+#  single python version, for use by packages which which are primarily programs
+#  and not modules.
+#
+#  Python module packages which support multiple Python versions should use
+#  the python-wheel.cygclass instead.
+#
 #  EXAMPLE
 #    inherit python3-wheel
 #    
@@ -55,7 +59,11 @@
 #  python3, python3-pip
 #****
 inherit python3
+
+#****v* python3-wheel.cygclass/PYTHON_WHEEL_VERSIONS
+#  DEFINITION
 PYTHON_WHEEL_VERSIONS=${PYTHON3_VERSION}
+#****
 inherit python-wheel
 
 #****C* python3-wheel.cygclass/python3_wheel_compile
