@@ -211,6 +211,27 @@ mirror_gnustep+="
 "	# mirror_gnustep
 
 
+#****d* Mirrors/mirror_invisibleisland
+#  DESCRIPTION
+#  invisible island packages
+#  SYNOPSIS
+#  SRC_URI="mirror://invisibleisland/${P/+/-}.tgz"
+#  DEFAULT MIRROR
+#  https://invisible-mirror.net/archives/
+#  MIRROR LIST
+#  https://invisible-island.net/#ftp
+#  NOTE
+#  All packages have .asc suffix signatures
+#  For ncurses add /current/ and use .tar.gz
+#****
+# lynx -dump -listonly -nonumbers invisible-island.net#ftp | \
+#					grep archives | sort -ru
+mirror_invisibleisland+="
+	https://invisible-mirror.net/archives
+	https://invisible-island.net/archives
+"	# mirror_invisibleisland
+
+
 #****d* Mirrors/mirror_kde
 #  DESCRIPTION
 #  KDE FTP
