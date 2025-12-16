@@ -5,8 +5,8 @@ etc/php.d/conf.d/bitset.ini
 usr/
 usr/lib/
 usr/lib/php/
-usr/lib/php/20180731/
-usr/lib/php/20180731/bitset.dll
+usr/lib/php/20210902/
+usr/lib/php/20210902/bitset.dll
 usr/share/
 usr/share/doc/
 usr/share/doc/pear/
