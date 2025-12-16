@@ -1,3 +1,8 @@
+0.37.5:
+	* python-wheel: Update default PYTHON_WHEEL_VERSIONS
+	* python-wheel: Restore python_wheel_compile passing options to bdist_wheel
+	* New mirror: invisibleisland.
+
 0.37.4:
 	* Add EPOCH
 	* Add automatic determination of the appropriate php_x_y requirement
