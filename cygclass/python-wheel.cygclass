@@ -179,7 +179,7 @@ python_wheel_compile() {
 		[ ! -d build/lib ] || find build/lib -delete
 		if [ ! -f dist/*-py2.py3*-none-any.whl -a ! -f dist/*py${ver:0:1}-none-any.whl ]
 		then
-			pip${ver} wheel --no-deps -w dist ${bdist_args} . || error "pip${ver} wheel failed"
+			pip${ver} --disable-pip-version-check wheel --no-deps --no-build-isolation -w dist ${bdist_args} . || error "pip${ver} wheel failed"
 		fi
 	done
 }
@@ -239,7 +239,7 @@ python_wheel_install() {
 		2.7|3.9) export ENSUREPIP_OPTIONS="install" ;;
 		*) export ENSUREPIP_OPTIONS="altinstall" ;;
 		esac
-		pip${ver} install -I dist/${whl} --root ${D} --prefix /usr --no-compile --no-deps --no-warn-script-location || error "pip${ver} install failed"
+		pip${ver} --disable-pip-version-check install -I dist/${whl} --root ${D} --prefix /usr --no-compile --no-deps --no-warn-script-location || error "pip${ver} install failed"
 	done
 }
 
