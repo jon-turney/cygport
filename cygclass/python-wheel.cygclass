@@ -55,6 +55,8 @@ PYTHON_WHEEL_NAME=${PYTHON_WHEEL_NAME:-${NAME#python*-}}
 
 inherit python.org
 
+: ${PYTHON_WHEEL_BUILD_METHOD:=pip}
+
 #****v* python-wheel.cygclass/PYTHON_WHEEL_VERSIONS
 #  SYNOPSIS
 #  PYTHON_WHEEL_VERSIONS="3.5:3.6" # e.g. added to stdlib in 3.7
@@ -113,6 +115,11 @@ do
 
 	check_prog_req pip${ver} python${ver//.}-pip
 	check_prog_req wheel-${ver} python${ver//.}-wheel
+
+	if [ "${PYTHON_WHEEL_BUILD_METHOD}" = "build" ]
+	then
+		python${ver} -c 'import build' 2>/dev/null || error "pyproject-build${ver} is required to build this package";
+	fi
 done
 
 #****o* python-wheel.cygclass/PKG_NAMES (python-wheel)
@@ -160,6 +167,20 @@ fi
 #  Any arguments provided will be passed as arguments to 'setup.py bdist_wheel',
 #  if that is invoked by the build.
 #****
+
+#****iv* python-wheel.cygclass/PYTHON_WHEEL_BUILD_METHOD
+#  SYNOPSIS
+#  PYTHON_WHEEL_BUILD_METHOD="pip"
+#  DESCRIPTION
+#  Selects the method used to build a binary wheel:
+#  * 'build': Uses pyproject-build (the 'build' module).
+#  * 'pip': Uses 'pip wheel'.
+#  * 'setuptools': Uses 'setup.py bdist_wheel'.
+#  NOTES
+#   If you find yourself using this to override cygport's default behaviour, that
+#   is in all likelihood a bug in cygport.
+#****
+
 python_wheel_compile() {
 	local ver
 	local bdist_args
@@ -179,7 +200,25 @@ python_wheel_compile() {
 		[ ! -d build/lib ] || find build/lib -delete
 		if [ ! -f dist/*-py2.py3*-none-any.whl -a ! -f dist/*py${ver:0:1}-none-any.whl ]
 		then
-			pip${ver} --disable-pip-version-check wheel --no-deps --no-build-isolation -w dist ${bdist_args} . || error "pip${ver} wheel failed"
+			case "${PYTHON_WHEEL_BUILD_METHOD}" in
+			"setuptools")
+				# setuptools.launch imports setuptools hooks regardles of setup.py
+				/usr/bin/python${ver} -msetuptools.launch setup.py bdist_wheel "${@}" || error "setup.py bdist_wheel failed"
+			;;
+
+			"pip")
+				pip${ver} --disable-pip-version-check wheel --no-deps --no-build-isolation -w dist ${bdist_args} . || error "pip${ver} wheel failed"
+			;;
+
+			"build")
+				/usr/bin/python${ver} -m build --wheel --outdir dist --skip-dependency-check --no-isolation . || error "pyproject-build${ver} failed"
+			;;
+
+			*)
+				error "unknown PYTHON_WHEEL_BUILD_METHOD: ${PYTHON_WHEEL_BUILD_METHOD}"
+			;;
+
+			esac
 		fi
 	done
 }
