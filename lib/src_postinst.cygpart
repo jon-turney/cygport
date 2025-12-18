@@ -1130,6 +1130,26 @@ __prepstrip_one() {
 
 	fi
 }
+
+# avoid simultaneously running prepstrip_one on multiple names hardlinked to the
+# same file
+__prepstrip_one_locked()
+{
+	local exe=$1;
+	local __fd;
+
+	# open the file with a dynamically allocated fd
+	: {__fd}<${exe}
+
+	# lock file
+	flock ${__fd}
+
+	__prepstrip_one "${@}"
+
+	# close fd, releasing lock
+	{__fd}<&-
+}
+
 __prepstrip() {
 	local exe;
 
@@ -1175,7 +1195,7 @@ __prepstrip() {
 		done
 		((++ord))
 		oxt=$(printf "%05d" "${ord}")
-		__prepstrip_one "${exe}" "${oxt}" &
+		__prepstrip_one_locked "${exe}" "${oxt}" &
 		echo "    ... ${exe} ==> .dbgsrc.out.${oxt}" >> ${T}/.dbgsrc.dbg
 	done < <(find * -type f ! -name '*.dll.a' ! -name '*.lib' \
 		      -a \( -name '*.a' -o -name '*.o' -o -name '*.dll' -o -name '*.exe' -o -name '*.so' -o -name '*.so.*' -o -name '*.oct' -o -name '*.mex' -o -name '*.cmxs' \) -print0 \
