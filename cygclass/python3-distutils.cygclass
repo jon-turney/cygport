@@ -25,7 +25,7 @@ warning "python3-distutils.cygclass: python distutils is deprecated. Please migr
 
 #****h* Cygclasses/python3-distutils.cygclass
 #  DESCRIPTION
-#  Distutils is the most common method for building and installing Python
+#  Distutils is a deprecated method for building and installing Python
 #  libraries and programs.  The build is defined by a setup.py file in the
 #  top source directory, which controls the installation of files and the
 #  building of C Python extensions.  Many such packages are hosted on the
