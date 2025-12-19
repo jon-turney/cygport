@@ -21,31 +21,6 @@
 #
 ################################################################################
 
-#****ih* Cygclasses/python-distutils.cygclass
-#  DESCRIPTION
-#  Deprecated compatibility wrapper for python2-distutils.cygclass.
-#  INHERITS
-#  python2-distutils.cygclass, python.cygclass
-#****
-
 warning "python-distutils.cygclass: deprecated compatibility wrapper for the python2-distutils cygclass"
 
 inherit python2-distutils python
-
-#****iC* python-distutils.cygclass/python_distutils_compile
-#  DESCRIPTION
-#  Deprecated compatibility wrapper for python2_distutils_compile.
-#****
-python_distutils_compile() {
-	python2_distutils_compile "$@"
-}
-
-#****iI* python-distutils.cygclass/python_distutils_install
-#  DESCRIPTION
-#  Deprecated compatibility wrapper for python2_distutils_install.
-#****
-python_distutils_install() {
-	python2_distutils_install "$@"
-}
-
-readonly -f python_distutils_compile python_distutils_install
