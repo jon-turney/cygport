@@ -30,17 +30,12 @@
 #  easily extendible with modules written in Python and/or C/C++.  Programs
 #  can also embed a Python interpreter for use with their own extensions.
 #
-#  The new 3.x versions of Python are incompatible with the widely used 2.x
-#  versions, so they are designed to be installed in parallel as separate
-#  interpreters.
-#
 #  This cygclass provides definitions and some install helpers which can be used
 #  by any Python3-based package.  Python3 modules and programs are built in a
 #  number of ways, so this cygclass does not provide any build functions.  The
 #  two most common build systems for Python3 packages are Distutils and autotools.
 #  NOTE
-#  python3.cygclass is for the 3.x versions of Python; for the 2.x versions,
-#  see python2.cygclass.
+#  python3.cygclass is for the 3.x versions of Python.
 #  INHERITED BY
 #  python-wheel.cygclass
 #  REQUIRES
