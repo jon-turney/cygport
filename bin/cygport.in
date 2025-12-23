@@ -654,6 +654,14 @@ then
 	fi
 fi
 
+
+# prevent any git commands run by the build from traversing up out of the
+# working directory into the ${topdir}, which contains the cygport file - thus
+# preventing them from seeing a git repository there, if the cygport is under
+# git control, and mistaking it for a git repository containing the project
+# being built.
+export GIT_CEILING_DIRECTORIES+=":${topdir}"
+
 ################################################################################
 #
 # Command processing
