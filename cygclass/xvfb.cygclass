@@ -64,7 +64,7 @@ xvfb_run() {
 	then
 		xvfb_display=$DISPLAY
 	else
-		for ((n=1; ; n++))
+		for ((n=1; n<64 ; n++))
 		do
 			if [ ! -e /tmp/.X11-unix/X${n} -a ! -e /tmp/.X${n}-lock ]
 			then
@@ -72,6 +72,11 @@ xvfb_run() {
 				Xorg $xvfb_display -config cygport-xvfb.conf -nolisten tcp -noreset &> /dev/null &
 				xvfb_pid=$!
 				xvfb_sock="/tmp/.X${n}-lock /tmp/.X11-unix/X${n}"
+
+				# "wait for" the X server to become ready to
+				# accept connections
+				sleep 1
+
 				if xmodmap -display $xvfb_display &> /dev/null
 				then
 					export DISPLAY=${xvfb_display}
@@ -84,6 +89,12 @@ xvfb_run() {
 				fi
 			fi
 		done
+
+		if ! defined DISPLAY
+		then
+			error "could not start an X server on a free display number"
+		fi
+
 	fi
 
 	# avoid the most common fork failures
@@ -108,11 +119,15 @@ xvfb_run() {
 
 	# now run the task
 	"$@"
+	local status=$?
 
 	# cleanup
 	/bin/kill $xvfb_pid $dbus_pid $gamin_pid &> /dev/null || true
 	/bin/kill -s KILL $xvfb_pid $dbus_pid $gamin_pid &> /dev/null || true
 	rm -f $xvfb_sock $dbus_sock $gamin_sock
+
+	# propagate task exit code
+	return $status
 }
 
 readonly -f xvfb_run
