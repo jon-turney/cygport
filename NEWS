@@ -1,3 +1,9 @@
+0.37.6:
+	* python-wheel: Disable unneeded build isolation
+	* postinstall: Improve stripping of sets of hardlinked files
+	* Drop documentation of python2-only cygclasses
+	* xvfb: Fix potential infinite loop
+
 0.37.5:
 	* python-wheel: Update default PYTHON_WHEEL_VERSIONS
 	* python-wheel: Restore python_wheel_compile passing options to bdist_wheel
