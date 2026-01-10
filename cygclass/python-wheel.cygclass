@@ -121,14 +121,56 @@ do
 	fi
 done
 
+# If we've inherited python3 (so PYTHON3_VERSION is defined), and if
+# PYTHON_WHEEL_VERSIONS contains PYTHON3_VERSION, move it to the end.
+#
+# This help ensure that constructions like:
+#
+# declare python${PYTHON3_PKGVERSION}_foo_CONTENTS+=" usr/bin/foo"
+#
+# are more likely to work as expected (that is, if an unversioned foo console
+# script entrypoint 'foo' is installed from the wheel for every version in
+# PYTHON_WHEEL_VERSIONS, the last one installed is for PYTHON3_PKGVERSION.)
+if defined PYTHON3_VERSION
+then
+	_tmp_wheel_v=
+	_python3_version_present=
+	for ver in ${PYTHON_WHEEL_VERSIONS//:/ }
+	do
+		case "${ver}" in
+		${PYTHON3_VERSION})	_python3_version_present=1 ;;
+		*)			_tmp_wheel_v+=$ver: ;;
+		esac
+	done
+	if [ ${_python3_version_present} ]
+	then
+		_tmp_wheel_v+=${PYTHON3_VERSION}:
+	fi
+	PYTHON_WHEEL_VERSIONS=${_tmp_wheel_v%:}
+	unset _python3_version_present
+	unset _tmp_wheel_v
+fi
+
 #****o* python-wheel.cygclass/PKG_NAMES (python-wheel)
 #  DESCRIPTION
 #  For a NAME of python-foo, pythonXY-foo binary packages are created
 #  automatically, corresponding to each X.Y version in PYTHON_WHEEL_VERSIONS.
+#
 #  Each package also includes its own independent copy of the automatically
-#  installed documentation (COPYING, README, etc.).  For those packages which
-#  install scripts into /usr/bin, these should be added to the respective
-#  pythonXY_foo_CONTENTS.
+#  installed documentation (COPYING, README, etc.).
+#
+#  For those packages which install scripts into /usr/bin, these should be added
+#  to the respective pythonXY_foo_CONTENTS, for example:
+#
+#    declare python${PYTHON3_PKGVERSION}_foo_CONTENTS+=" usr/bin/foo"
+#
+#  or
+#
+#    for v in ${PYTHON_WHEEL_VERSIONS//:/ }
+#      do
+#        declare python${v/./}_foo_CONTENTS+=" usr/bin/foo${v}"
+#      done
+#
 #****
 if [ ${NAME%%-*} = "python" ]
 then
@@ -269,6 +311,10 @@ python_wheel_install() {
 		# ENSUREPIP_OPTIONS not present: pip, pipX, pipX.Y, easy_install, easy_install-X.Y
 		# ENSUREPIP_OPTIONS=altinstall: pipX.Y, easy_install-X.Y
 		# ENSUREPIP_OPTIONS=install: pipX, pipX.Y, easy_install-X.Y
+
+		# if there are any collisions (e.g over console script names),
+		# the last version appearing in PYTHON_WHEEL_VERSIONS is the one
+		# that gets to install them
 
 		case ${ver} in
 		3.9) export ENSUREPIP_OPTIONS="install" ;;
