@@ -300,6 +300,10 @@ python_wheel_install() {
 		elif [ -f dist/*-cp${ver/.}-*cygwin_*_${ARCH}.whl ]
 		then
 			whl="*-cp${ver/.}-*cygwin_*_${ARCH}.whl"
+
+		elif [ -f dist/*-cp${ver/.}-*cygwin_${ARCH}.whl ]
+		then
+			whl="*-cp${ver/.}-*cygwin_${ARCH}.whl"
 		else
 
 			inform "This error occurs when ARCH=noarch is set but a platform wheel was produced; otherwise it indicates a bug in cygport"
