@@ -309,7 +309,7 @@ check_python_module() {
 	check_python2_module "$@"
 }
 
-#****f* Checks/check_python2_module
+#***if* Checks/check_python2_module
 #  SYNOPSIS
 #  check_python2_module MODULE [MODULE2] ...
 #  DESCRIPTION
