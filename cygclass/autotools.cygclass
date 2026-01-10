@@ -680,12 +680,13 @@ cygconf() {
 	configure="${confdir}/configure"
 	if [ -z ${AUTOCONF_VERSION} ]
 	then
-		confver="$("$configure" --version | sed -rn 's/.*(GNU Autoconf|autoconf version) ([0-9\.]+)/\2/p')"
+		confver="$("$configure" --version | sed -rn 's/.*(GNU Autoconf|autoconf version) ([0-9\.]+).*/\2/p')"
 	else
 		confver=${AUTOCONF_VERSION}
 	fi
 	confver_maj=${confver%%.*}
-	confver_min=${confver##*.}
+	confver_min=${confver#*.}
+	confver_min=${confver_min%%.*}
 	if [ -z $confver_maj ]
 	then
 		error "could not determine the autoconf version used to generate ./configure; perhaps set AUTOCONF_VERSION?";
@@ -733,7 +734,6 @@ cygconf() {
 		# have defaults that don't match the FHS.
 		confargs+=" --infodir=${prefix}/share/info --mandir=${prefix}/share/man"
 	fi
-
 
 	if [ $confver_min -ge 50 ]
 	then
