@@ -33,10 +33,10 @@
 cygtest() {
 	if [ -e Makefile -o -e GNUmakefile -o -e makefile ]
 	then
-		if make -n check &> /dev/null
+		if make -in check &> /dev/null
 		then
 			make -k check
-		elif make -n test &> /dev/null
+		elif make -in test &> /dev/null
 		then
 			make -k test
 		else
