@@ -213,7 +213,7 @@ case ${CBUILD} in
 # https://sourceware.org/legacy-ml/cygwin-developers/2013-02/msg00132.html
 x86_64-unknown-cygwin)  CBUILD="x86_64-pc-cygwin" ;&
 *-cygwin)  CHOST="${_host_arch:-${CBUILD%%-*}}-pc-cygwin" ;;
-*)         defined _host_arch || _host_arch="x86_64"
+*)         defined _host_arch || (warning "cross-compiling but --arch is unspecified, assuming x86_64" && _host_arch="x86_64")
            CHOST="${_host_arch}-pc-cygwin" ;;
 esac
 unset _host_arch
@@ -224,8 +224,8 @@ declare    TOOLCHAIN_TARGET="";
 
 #****d* Compiling/ARCH
 #  DESCRIPTION
-#  The Cygwin architecture the binaries are being built for (i686 or x86_64),
-#  or "noarch".
+#  The Cygwin architecture the binaries are being built for ("i686", "x86_64" or
+#  "aarch64"), or "noarch".
 #  NOTE
 #  This variable should only be defined in a .cygport in one of the
 #  following cases:
@@ -248,6 +248,10 @@ declare    ARCH=${CHOST%%-*};
 #****d* Compiling/ARCH_x86_64
 #  DESCRIPTION
 #  Defined only when building binaries for x86_64 (64-bit) Cygwin.
+#****
+#****d* Compiling/ARCH_aarch64
+#  DESCRIPTION
+#  Defined only when building binaries for aarch64 Cygwin.
 #****
 declare    ARCH_${ARCH}=1;
 

@@ -188,22 +188,57 @@ do
 		_nproc="-j $1";
 		shift;
 		;;
+	--arch)
+		shift;
+		_arch_opt="$1";
+		shift;
+		case ${_arch_opt} in
+			x86_64|amd64|x64|64)
+				_arch_opt=x86_64;
+				;;
+			i686|x86|32)
+				_arch_opt=i686;
+				;;
+			aarch64|arm64)
+				_arch_opt=aarch64;
+				;;
+			*)
+				echo "${0}: unknown arch ${_arch_opt}";
+				exit 1;
+				;;
+		esac
+
+		if defined _host_arch && [ ${_host_arch} != ${_arch_opt} ]
+		then
+			error "Only one of --32|--64|--arch may be specified"
+		fi
+
+		_host_arch=${_arch_opt}
+		unset _arch_opt
+		;;
+
 	--32|-4)
+		warning "The option --32 is deprecated. Use --arch x86 instead"
+
 		if defined _host_arch && [ ${_host_arch} != i686 ]
 		then
-			error "Only one of --32|--64 may be specified"
+			error "Only one of --32|--64|--arch may be specified"
 		fi
 		_host_arch=i686
 		shift;
 		;;
+
 	--64|-8)
+		warning "The option --64 is deprecated. Use --arch x86 instead"
+
 		if defined _host_arch && [ ${_host_arch} != x86_64 ]
 		then
-			error "Only one of --32|--64 may be specified"
+			error "Only one of --32|--64|--arch may be specified"
 		fi
 		_host_arch=x86_64
 		shift;
 		;;
+
 	-*)
 		echo "${0}: unknown argument ${1}";
 		__show_help;

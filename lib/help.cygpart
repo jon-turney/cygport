@@ -28,18 +28,15 @@ __show_help() {
 
 		OPTIONS may include the following:
 
-		  --jobs, -j N 	specify the number of jobs to use
-		  --32, -4      build package for i686 Cygwin
-		  --64, -8      build package for x86_64 Cygwin
+		  --jobs, -j N  specify the number of jobs to use
+		  --arch ARCH   build package for ARCH-pc-cygwin host
 		  --debug       enable debugging messages
 		  --version, -v show the version
 		  --help, -h    show this help
 
-		The --32 and --64 options are mutually exclusive.
-
-		On Cygwin, if neither the --32 nor --64 options are enabled,
-		the package will be built for the architecture on which cygport
-		is run.  On other systems, the x86_64 architecture is the default.
+		On Cygwin, if the --arch option is not specified, the package
+		will be built for the architecture on which cygport is run.  On
+		other systems, the x86_64 architecture is the default.
 
 		COMMAND may be one or more of the following:
 
