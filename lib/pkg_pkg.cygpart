@@ -577,7 +577,7 @@ __pkg_srcpkg() {
 
 	for cygwin_file in ${CYGWIN_FILES}
 	do
-		cp --preserve=timestamps ${C}/${cygwin_file} ${spkgdir}
+		cp -r --preserve=timestamps ${C}/${cygwin_file} ${spkgdir}
 	done
 
 	cp --preserve=timestamps ${top}/${cygportfile} ${spkgdir};

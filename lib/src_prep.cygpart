@@ -471,8 +471,8 @@ __src_prep() {
 
 #****v* Preparation/CYGWIN_FILES
 #  DESCRIPTION
-#  A list of files which are to be included in the source package, and installed
-#  into ${C}.
+#  A list of files and/or directiories which are to be included in the source
+#  package, and installed into ${C}.
 #  NOTE
 #  Historically, files in $C were created by a patch file named
 #  ${PF}.cygwin.patch, which is automatically applied and generated.  This
