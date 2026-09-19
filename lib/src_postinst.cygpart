@@ -40,7 +40,7 @@ __prep_fonts_dir() {
 
 	for catalogue in ${D}${cataloguedir}/*
 	do
-		fontdir=$(readlink -f ${catalogue})
+		fontdir=$(readlink -m ${catalogue})
 		find ${D}${fontdir} -name '*.pcf' -exec gzip -q ${SOURCE_DATE_EPOCH:+-n} '{}' +
 		mkfontscale ${D}${fontdir}
 		mkfontdir ${D}${fontdir}
