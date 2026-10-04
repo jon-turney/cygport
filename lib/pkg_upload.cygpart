@@ -65,6 +65,7 @@ __pkg_upload() {
 	local -i n=0
 	local -a pkg_files
 	local ready=true
+	local upsrc=true
 
 	if defined _CYGPORT_RESTRICT_upload_
 	then
@@ -73,6 +74,7 @@ __pkg_upload() {
 
 	case $1 in
 	full) ;;
+	bin) upsrc= ;;
 	stage) ready= ;;
 	*) error "Internal syntax error" ;;
 	esac
@@ -169,7 +171,17 @@ __pkg_upload() {
 
 	__step "Running lftp ${connect_string}"
 
+
 	cd "${uploaddir}"
+
+	if [ -n "${upsrc}" ]
+	then
+		src_cmds="
+rm -f src/release/${NAME}/!ready || echo -n
+mirror -v -eR srcpkg/${NAME} src/release/
+${ready:+put /dev/null -o src/release/${NAME}/!ready}
+"
+	fi
 
 	lftp -f <(cat <<-EOF
 		set cmd:fail-exit on
@@ -179,9 +191,7 @@ __pkg_upload() {
 		rm -f ${archdir}/release/${NAME}/!ready || echo -n
 		mirror -v -eR binpkg/${NAME} ${archdir}/release/
 		${ready:+put /dev/null -o ${archdir}/release/${NAME}/!ready}
-		rm -f src/release/${NAME}/!ready || echo -n
-		mirror -v -eR srcpkg/${NAME} src/release/
-		${ready:+put /dev/null -o src/release/${NAME}/!ready}
+		${src_cmds}
 EOF
 	) || error "Upload failed"
 

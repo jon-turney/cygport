@@ -11,7 +11,8 @@ _cygport()
 		prep unpack oldpatch compile build make \
 		check test inst install list dep depends srcpackage srcpkg \
 		package pkg package-test pkg-test diff mkdiff mkpatch \
-		upload stage announce almostall all all-test clean finish \
+		upload upload-bin stage announce almostall all all-test \
+		clean finish \
 		help info version homepage website vars'
 
 	if [[ $COMP_CWORD -eq 1 ]] ; then

@@ -799,6 +799,12 @@ do
 			(__pkg_upload full) 2>&1 | tee -a ${uploadlog};
 			_status=${PIPESTATUS[0]};
 			;;
+		upload-bin|upbin)
+			__stage Uploading;
+			__log_init ${uploadlog};
+			(__pkg_upload bin) 2>&1 | tee -a ${uploadlog};
+			_status=${PIPESTATUS[0]};
+			;;
 		stage)
 			__stage Staging;
 			__log_init ${uploadlog};

@@ -48,7 +48,8 @@ __show_help() {
 		  srcpackage    create source package
 		  package       create binary and source packages
 		  package-test  create binary and source packages, marked as test
-		  upload        upload finished packages to cygwin.com
+		  upload        upload packages to cygwin.com
+		  upload-bin    upload binary packages to cygwin.com
 		  announce      send an announcement email to cygwin.com
 		  finish        delete the working directory
 		  all           run prep, compile, install and package
