@@ -290,6 +290,15 @@ else
 	readonly _tar_bz2_flag="-j"
 fi
 
+if check_prog cygcheck
+then
+	# use full path to ensure we always use the system cygcheck, even if
+	# we're in the middle of packaging cygwin itself
+	file_to_package="$(which cygcheck) -f"
+elif check_prog cygwin-pkg-tool
+then
+	file_to_package="cygwin-pkg-tool file"
+fi
 
 ################################################################################
 #
