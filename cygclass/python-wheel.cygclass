@@ -219,15 +219,15 @@ python_wheel_compile() {
 				# clean the build dir in ${B} from any previous iteration
 				[ ! -d build/lib ] || find build/lib -delete
 				# setuptools.launch imports setuptools hooks regardles of setup.py
-				/usr/bin/python${ver} -msetuptools.launch setup.py bdist_wheel "${@}" || error "setup.py bdist_wheel failed"
+				/usr/bin/python${ver} -msetuptools.launch setup.py bdist_wheel -d dist/py${ver} "${@}" || error "setup.py bdist_wheel failed"
 			;;
 
 			"pip")
-				pip${ver} --disable-pip-version-check --verbose wheel --no-deps --no-build-isolation -w dist ${bdist_args} ${S} || error "pip${ver} wheel failed"
+				pip${ver} --disable-pip-version-check --verbose wheel --no-deps --no-build-isolation -w dist/py${ver} ${bdist_args} ${S} || error "pip${ver} wheel failed"
 			;;
 
 			"build")
-				/usr/bin/python${ver} -m build --wheel --outdir dist --skip-dependency-check --no-isolation ${S} || error "pyproject-build${ver} failed"
+				/usr/bin/python${ver} -m build --wheel --outdir dist/py${ver} --skip-dependency-check --no-isolation ${S} || error "pyproject-build${ver} failed"
 			;;
 
 			*)
@@ -244,8 +244,10 @@ python_wheel_compile() {
 
 	# if we made a universal or pure python wheel, there's no need to repeat
 	# the build for a different ${ver}
-	if [ -f dist/*-py2.py3*-none-any.whl -o -f dist/*py${ver:0:1}-none-any.whl ]
+	if [ -f dist/py${ver}/*-py2.py3*-none-any.whl -o -f dist/py${ver}/*py${ver:0:1}-none-any.whl ]
 	then
+		# copy noarch wheels to dist for the benefit of "dowheel"
+		cp dist/py${ver}/*.whl dist/
 		break
 	fi
 
@@ -268,7 +270,7 @@ python_wheel_install() {
 
 	for ver in ${PYTHON_WHEEL_VERSIONS//:/ }
 	do
-		if [ -f dist/*-py2.py3*-none-any.whl ]
+		if [ -f dist/py${ver}/*-py2.py3*-none-any.whl ]
 		then
 			# Universal wheels can be installed on all versions of Python
 			whl="*-py2.py3*-none-any.whl"
@@ -278,7 +280,7 @@ python_wheel_install() {
 				   warning "A universal wheel was produced, but ARCH=noarch is not set"
 			fi
 
-		elif [ -f dist/*-py${ver:0:1}-none-any.whl ]
+		elif [ -f dist/py${ver}/*-py${ver:0:1}-none-any.whl ]
 		then
 			# not all noarch wheels are officially universal
 			whl="*-py${ver:0:1}-none-any.whl"
@@ -288,13 +290,18 @@ python_wheel_install() {
 				   warning "A pure python wheel was produced, but ARCH=noarch is not set"
 			fi
 
-		elif [ -f dist/*-cp${ver/.}-*cygwin_*_${ARCH}.whl ]
+		elif [ -f dist/py${ver}/*-cp${ver/.}-*cygwin_*_${ARCH}.whl ]
 		then
 			whl="*-cp${ver/.}-*cygwin_*_${ARCH}.whl"
-		else
 
+		elif [ -f dist/py${ver}/*-cp*-abi3-cygwin_*_${ARCH}.whl ]
+		then
+			whl="*-cp*-abi3-cygwin_*_${ARCH}.whl"
+			warning "An ABI3 wheel was produced"
+
+		else
 			inform "This error occurs when ARCH=noarch is set but a platform wheel was produced; otherwise it indicates a bug in cygport"
-			whl=$(cd dist ; ls *.whl)
+			whl=$(cd dist/py${ver} ; ls *.whl)
 			error "unknown wheel filename: ${whl}"
 
 		fi
@@ -311,7 +318,7 @@ python_wheel_install() {
 		3.12) export ENSUREPIP_OPTIONS="install" ;;
 		*) export ENSUREPIP_OPTIONS="altinstall" ;;
 		esac
-		pip${ver} --disable-pip-version-check install -I dist/${whl} --root ${D} --prefix /usr --no-compile --no-deps --no-warn-script-location || error "pip${ver} install failed"
+		pip${ver} --disable-pip-version-check install -I dist/py${ver}/${whl} --root ${D} --prefix /usr --no-compile --no-deps --no-warn-script-location || error "pip${ver} install failed"
 	done
 }
 
